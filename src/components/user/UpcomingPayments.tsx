@@ -35,7 +35,7 @@ export const UpcomingPayments = ({ cols = 2, count = 2 }) => {
           index < count && (
             <div
               key={index}
-              className={`w-full lg:w-1/${cols} bg-green-300 py-8 px-6 rounded-2xl flex flex-col items-start space-y-7`}
+              className={`w-full lg:w-1/${cols} bg-green-300 pt-2 pb-5 px-6 rounded-2xl flex flex-col items-start space-y-7`}
             >
               <div className="text-4xl rounded-2xl px-3 py-3 bg-transparent text-transparent hidden lg:block">
                 {item.icon}
