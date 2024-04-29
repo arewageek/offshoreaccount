@@ -60,7 +60,7 @@ export const QuickTransfer = () => {
               </div>
             </div>
 
-            <div className="w-full flex items-center space-x-3">
+            {/* <div className="w-full flex items-center space-x-3">
               <div className="text-[8.5pt] font-[450] h-[60pt] px-5 py-5 border-2 border-gray-200 bg-gray-50 text-gray-600  w-full rounded-xl">
                 <label htmlFor="#amount">Account Number ($)</label>
                 <input
@@ -70,7 +70,7 @@ export const QuickTransfer = () => {
                   placeholder="$124"
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="w-full flex justify-center space-x-3 font-bold text-sm">
               <button

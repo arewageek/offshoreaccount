@@ -8,7 +8,7 @@ interface Props {
 
 function UserLayouts({ children }: Props) {
   return (
-    <div className="px-4 md:px-7 py-5 md:py-10 max-w-screen bg-gray-100 text-gray-800 min-h-screen">
+    <div className="px-4 md:px-7 py-5 md:py-10 max-w-screen bg-gray-50 text-gray-800 min-h-screen">
       <div className="w-full md:flex md:justify-end">
         <div className="w-full md:w-[80%] items-center">
           <TopNav />
