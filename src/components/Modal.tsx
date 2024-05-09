@@ -17,7 +17,7 @@ const Modal = ({ title, message, visible, close }: Props) => {
     <div
       className={`${
         visible ? "fixed" : "hidden"
-      } w-screen h-screen backdrop-blur-sm top-0 left-0 p-10 flex justify-center items-center bg-black/35`}
+      } w-screen h-screen backdrop-blur-sm top-0 left-0 p-10 flex justify-center items-center bg-black/35 z-50`}
     >
       <div className="px-10 py-5 w-full lg:w-1/3 rounded-lg shadow-lg bg-white divide-y-2">
         <div className="w-full flex justify-between items-center py-3">

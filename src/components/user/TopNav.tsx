@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FaBell, FaList } from "react-icons/fa";
+import { FaBell, FaCog, FaList } from "react-icons/fa";
 import { MobileNav } from "./MobileNav";
 import { useSession } from "next-auth/react";
 
@@ -17,7 +17,7 @@ export const TopNav = () => {
 
   return (
     <>
-      <div className="w-full flex justify-between items-center px-5 space-x-10">
+      <div className="w-full flex justify-between items-center px-5 space-x-10 mb-10">
         <div className="flex justify-start space-x-5 items-center">
           <div
             className="w-10 h-10 bg-white rounded-full shadow"
@@ -28,9 +28,10 @@ export const TopNav = () => {
             }}
           ></div>
 
-          <div className="flex justify-center items-center h-full text-xl">
-            <button className="">
-              <FaBell />
+          <div className="flex justify-center items-center h-full text-2xl">
+            <button className="flex justify-center items-center space-x-3">
+              <FaCog />
+              <span className="text-sm font-bold">Settings</span>
             </button>
           </div>
         </div>

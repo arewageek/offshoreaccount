@@ -25,7 +25,7 @@ export const Sidenav = () => {
   ];
 
   return (
-    <div className="h-screen w-[250pt] md:w-[15%] px-5 hidden lg:block fixed left-5 py-3 bg-green-100 shadow-md">
+    <div className="h-screen w-[250pt] md:w-[15%] px-5 hidden lg:block fixed left-5 py-3">
       <div className="w-full h-[80%] flex flex-col justify-between text-sm">
         <div className="flex flex-col space-y-4">
           {/* nav */}
