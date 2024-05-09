@@ -1,3 +1,5 @@
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import { FaCoins, FaCouch, FaFile, FaFileAlt } from "react-icons/fa";
 
@@ -53,9 +55,12 @@ export const UpcomingPayments = ({ count }: { count: number }) => {
               </div>
 
               {count <= 2 && (
-                <button className="bg-green-300 text-black p-3 rounded-full">
+                <Link
+                  href="/user/payments"
+                  className="bg-green-300 text-black p-3 rounded-full"
+                >
                   <FaFileAlt />
-                </button>
+                </Link>
               )}
             </div>
           )
