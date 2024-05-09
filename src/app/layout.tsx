@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import AuthProvders from "@/components/providers/AuthProvders";
 import AppWrapper from "@/components/providers/AppWrapper";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Offshore Account",
@@ -21,7 +18,7 @@ export default function RootLayout({
   return (
     <AppWrapper>
       <html lang="en">
-        <body className={`${inter.className}`}>
+        <body>
           <AuthProvders>{children}</AuthProvders>
           <ToastContainer />
         </body>
