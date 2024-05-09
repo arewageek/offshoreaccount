@@ -1,12 +1,12 @@
-"use client";
+// "use client";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import React from "react";
 
 const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
+  //   const router = useRouter();
 
-  router.push("/auth/signin");
+  //   router.push("/auth/signin");
 
   return children;
 };
