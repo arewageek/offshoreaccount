@@ -1,7 +1,7 @@
 import React from "react";
-import { FaCoins, FaCouch } from "react-icons/fa";
+import { FaCoins, FaCouch, FaFile, FaFileAlt } from "react-icons/fa";
 
-export const UpcomingPayments = ({ cols = 2, count = 2 }) => {
+export const UpcomingPayments = ({ count }: { count: number }) => {
   const payments = [
     {
       icon: <FaCouch />,
@@ -33,23 +33,30 @@ export const UpcomingPayments = ({ cols = 2, count = 2 }) => {
       {payments.map(
         (item, index) =>
           index < count && (
-            <div
-              key={index}
-              className={`w-full lg:w-1/${cols} bg-green-300 pt-2 pb-5 px-6 rounded-2xl flex flex-col items-start space-y-7`}
-            >
-              <div className="text-4xl rounded-2xl px-3 py-3 bg-transparent text-transparent hidden lg:block">
-                {item.icon}
-              </div>
+            <div key={index} className="flex items-center gap-3">
+              <div
+                className={`w-full lg:w-[130pt] bg-green-300 pt-6 pb-5 px-6 rounded-2xl flex flex-col items-start space-y-4`}
+              >
+                <div className="text-3xl rounded-2xl px-3 py-3 bg-black text-white hidden lg:block">
+                  {item.icon}
+                </div>
 
-              <div className="">
-                <div className="text-sm">
-                  <h3 className="font-bold text-lg">{item.title}</h3>
-                  <p className="text-[9pt] font-light">{item.type}</p>
+                <div className="">
+                  <div className="text-sm">
+                    <h3 className="font-bold text-lg">{item.title}</h3>
+                    <p className="text-[9pt] font-light">{item.type}</p>
+                  </div>
+                </div>
+                <div className="font-bold text-2xl text-green-950">
+                  ${item.amount.toLocaleString()}
                 </div>
               </div>
-              <div className="font-bold text-3xl text-green-950">
-                ${item.amount.toLocaleString()}
-              </div>
+
+              {count <= 2 && (
+                <button className="bg-green-300 text-black p-3 rounded-full">
+                  <FaFileAlt />
+                </button>
+              )}
             </div>
           )
       )}

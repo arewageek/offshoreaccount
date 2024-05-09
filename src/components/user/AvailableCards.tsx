@@ -17,9 +17,9 @@ export const AvailableCards = () => {
   ];
 
   return (
-    <div className="w-full mt-[80pt] px-2 py-2">
+    <div className="w-full px-2 py-2">
       <div className="w-full flex justify-between items-center">
-        <span className="text-xl font-[450] text-green-950">
+        <span className="text-lg font-bold text-green-950">
           Available Cards
         </span>
 

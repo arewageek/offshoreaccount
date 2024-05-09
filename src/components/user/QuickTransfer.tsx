@@ -1,9 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { FaCaretDown, FaCcMastercard, FaPaperPlane } from "react-icons/fa";
-import { AvailableCards } from "./AvailableCards";
 import Modal from "../Modal";
+import { Button, Input } from "@nextui-org/react";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const FormSchema = z.object({
+  accountName: z.string().min(3, "Name too short"),
+  accountNumber: z.string().min(8, "Invalid account number"),
+  bankName: z.string().min(4, "Bank Name too short"),
+  routingNumber: z.string().min(3, "Invalid Routing Number"),
+  swiftCode: z.string().min(8, "Invalid Swift Code"),
+  amount: z.string().min(1, "Invalid Amoount"),
+});
+
+type InputType = z.infer<typeof FormSchema>;
 
 export const QuickTransfer = () => {
   const [showModal, setShowModal] = useState(false);
@@ -17,79 +30,86 @@ export const QuickTransfer = () => {
     return false;
   }
 
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    reset,
+  } = useForm<InputType>({ resolver: zodResolver(FormSchema) });
+
+  const makeTransfer: SubmitHandler<InputType> = async (data) => {
+    // alert("Please contact customer service for support");
+    setShowModal(true);
+  };
+
   return (
     <div>
-      <h3 className="font-bold text-[15pt] text-gray-800 mb-5">
-        Quick transfer
-      </h3>
+      <div className="rounded-3xl bg-green-100 flex flex-col space-y-5 px-2.5 lg:px-6 lg:py-20 py-5">
+        <form onSubmit={handleSubmit(makeTransfer)}>
+          <div className="bg-green-300 py-5 lg:py-10 px-5 rounded-3xl grid gap-4">
+            <h4 className="font-bold text-lg">Quick Transfer</h4>
 
-      <div className="rounded-3xl bg-green-100 flex flex-col space-y-5 px-6 py-20">
-        <form action={handleTransfer}>
-          <div className="py-3 flex flex-col space-y-3">
-            <div className="w-full flex items-center space-x-3">
-              <input
-                type="tel"
-                name="account"
-                className="text-xs font-[450] px-5 py-3 border-2 border-gray-200 bg-gray-50 text-gray-600 placeholder:text-gray-400 w-full rounded-xl"
-                placeholder="Account Number"
-              />
+            <Input
+              {...register("accountName")}
+              label="Account Name"
+              size="sm"
+              errorMessage={errors.accountName?.message}
+              isInvalid={!!errors.accountName?.message}
+            />
+            <Input
+              {...register("accountNumber")}
+              label="Account Number"
+              size="sm"
+              errorMessage={errors.accountNumber?.message}
+              isInvalid={!!errors.accountNumber?.message}
+            />
+            <Input
+              {...register("bankName")}
+              label="Bank Name"
+              size="sm"
+              isInvalid={!!errors.bankName?.message}
+              errorMessage={errors.bankName?.message}
+            />
+            <Input
+              {...register("routingNumber")}
+              label="Routing Number"
+              size="sm"
+              errorMessage={errors.routingNumber?.message}
+              isInvalid={!!errors.routingNumber?.message}
+            />
+            <Input
+              {...register("swiftCode")}
+              label="Swift Code"
+              size="sm"
+              errorMessage={errors.swiftCode?.message}
+              isInvalid={!!errors.swiftCode?.message}
+            />
+            <Input
+              {...register("amount")}
+              label="Amount"
+              size="lg"
+              startContent="$"
+              errorMessage={errors.amount?.message}
+              isInvalid={!!errors.amount?.message}
+            />
 
-              <button
+            <div className="flex lg:gap-5 gap-3 flex-col lg:flex-row">
+              <Button
                 type="submit"
-                className="px-5 py-3 rounded-lg bg-green-900/90 text-sm text-green-50 hover:bg-black transition duration-300"
-              >
-                <FaPaperPlane />
-              </button>
-            </div>
-
-            <div className="w-full">
-              <div className="rounded-xl border-2 border-gray-300 px-5 py-3 flex justify-between items-center text-[9pt]">
-                <div className="flex items-center space-x-2">
-                  <span>
-                    <FaCcMastercard />
-                  </span>
-                  <span>Debit</span>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <span>$10.432</span>
-                  <span>
-                    <FaCaretDown />
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="w-full flex items-center space-x-3">
-              <div className="text-[8.5pt] font-[450] h-[60pt] px-5 py-5 border-2 border-gray-200 bg-gray-50 text-gray-600  w-full rounded-xl">
-                <label htmlFor="#amount">Account Number ($)</label>
-                <input
-                  type="tel"
-                  name="amount"
-                  className="h-full w-full text-lg font-bold text-gray-900 bg-transparent"
-                  placeholder="$124"
-                />
-              </div>
-            </div> */}
-
-            <div className="w-full flex justify-center space-x-3 font-bold text-sm">
-              <button
-                type="submit"
-                className="bg-green-950 text-green-50 px-4 py-2 w-full shadow-md rounded-lg hover:bg-green-300 border-2 border-green-950 hover:text-green-950 transition duration-300"
+                className="text-white bg-black text-xs w-full font-bold"
               >
                 Send Money
-              </button>
+              </Button>
 
-              <button className="bg-green-50 text-green-950 px-4 py-2 w-full shadow-md rounded-lg hover:bg-green-300 border-2 border-green-950 hover:text-green-950 transition duration-300">
-                Save as Draft
-              </button>
+              <Button
+                type="button"
+                className="bg-white text-black text-xs w-full font-bold"
+              >
+                Save Draft
+              </Button>
             </div>
           </div>
         </form>
-
-        <div>
-          <AvailableCards />
-        </div>
       </div>
 
       <Modal

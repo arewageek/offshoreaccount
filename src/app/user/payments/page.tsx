@@ -10,7 +10,7 @@ const PaymentsPage = () => {
             <div className="mb-10 my-2">
               <h4 className="font-bold">Upcoming Payments</h4>
             </div>
-            <UpcomingPayments cols={4} count={4} />
+            <UpcomingPayments count={4} />
           </div>
 
           <div className="w-full px-8 py-3">

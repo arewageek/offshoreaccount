@@ -58,32 +58,39 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit(SendMessage)} className="grid gap-y-4">
-      <Input
-        label="First Name"
-        {...register("firstName")}
-        errorMessage={errors.firstName?.message}
-        isInvalid={!!errors.firstName}
-      />
+      <div className="flex gap-5">
+        <Input
+          label="First Name"
+          {...register("firstName")}
+          errorMessage={errors.firstName?.message}
+          isInvalid={!!errors.firstName}
+          size="sm"
+          className="input-white"
+        />
 
-      <Input
-        label="Last Name"
-        {...register("lastName")}
-        errorMessage={errors.lastName?.message}
-        isInvalid={!!errors.lastName}
-      />
+        <Input
+          label="Last Name"
+          {...register("lastName")}
+          errorMessage={errors.lastName?.message}
+          isInvalid={!!errors.lastName}
+          size="sm"
+        />
+      </div>
 
       <Input
         label="Email"
         {...register("email")}
         errorMessage={errors.email?.message}
         isInvalid={!!errors.email}
+        size="sm"
       />
 
       <Textarea
-        placeholder="Type in your message"
         {...register("message")}
         isInvalid={!!errors.message}
         errorMessage={errors.message?.message}
+        size="lg"
+        label="Message"
       />
 
       <div className="mt-10 flex justify-center">

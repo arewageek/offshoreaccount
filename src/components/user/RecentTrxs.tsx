@@ -21,7 +21,7 @@ export const RecentTrxs = () => {
   ];
 
   return (
-    <div className="my-20">
+    <div className="lg:my-20 my-5">
       <div className="w-full flex flex-wrap justify-between items-center space-y-5 lg:space-y-0">
         <div className="w-full lg:w-auto">
           <h3 className="text-[10pt] lg:text-[13pt] font-bold">
