@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaBell, FaCog, FaList } from "react-icons/fa";
 import { MobileNav } from "./MobileNav";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export const TopNav = () => {
   const [showSidenav, setShowSidenav] = useState<boolean>(false);
@@ -29,10 +30,13 @@ export const TopNav = () => {
           ></div>
 
           <div className="flex justify-center items-center h-full text-2xl">
-            <button className="flex justify-center items-center space-x-3">
+            <Link
+              href="/user/settings"
+              className="flex justify-center items-center space-x-3"
+            >
               <FaCog />
               <span className="text-sm font-bold">Settings</span>
-            </button>
+            </Link>
           </div>
         </div>
 
