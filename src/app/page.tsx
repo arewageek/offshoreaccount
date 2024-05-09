@@ -1,8 +1,5 @@
-"use client";
-import { useRouter } from "next/navigation";
+import AuthRedirect from "@/components/providers/AuthRedirect";
 
 export default function Home() {
-  const router = useRouter();
-
-  router.push("/auth/signin");
+  <AuthRedirect>blank</AuthRedirect>;
 }
