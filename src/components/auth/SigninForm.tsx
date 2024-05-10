@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,7 @@ import { FaAt, FaEye, FaEyeSlash, FaUserLock } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Props {
   callbackUrl?: string;
@@ -27,6 +28,14 @@ type InputType = z.infer<typeof FormSchema>;
 
 const SigninForm = (props: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [authenticated, setAuthenticated] = useState();
+  const [session, setSession] = useState<any>();
+
+  const { data } = useSession();
+
+  useEffect(() => {
+    setSession(data?.user);
+  }, [authenticated]);
 
   const router = useRouter();
 
@@ -48,11 +57,15 @@ const SigninForm = (props: Props) => {
 
     try {
       if (!authenticate?.ok) {
-        toast.error(authenticate?.error);
+        console.log(authenticate?.error);
+        toast.error("An error occurred while authenticating");
         return false;
       }
       toast.success("Signed in successfully!");
-      router.push("/user/");
+
+      console.log(session.role);
+      if (session?.role == "admin") router.push("/admin/");
+      else router.push("/user/");
     } catch (err) {
       console.log(err);
       toast.error("Oops! Something went wrong");
@@ -90,7 +103,7 @@ const SigninForm = (props: Props) => {
 
       <Button
         type="submit"
-        color="primary"
+        color="success"
         isLoading={isSubmitting}
         className="py-7 w-full font-bold"
       >

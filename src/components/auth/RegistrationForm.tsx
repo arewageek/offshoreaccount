@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button, Input } from "@nextui-org/react";
 import {
   FaAt,
+  FaEye,
+  FaEyeSlash,
   FaPhone,
   FaPhoneAlt,
   FaUserAlt,
@@ -13,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { createUser } from "@/lib/actions/authAction";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z
   .object({
@@ -44,6 +48,10 @@ const FormSchema = z
 type InputType = z.infer<typeof FormSchema>;
 
 export const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -59,8 +67,10 @@ export const RegisterForm = () => {
     try {
       const created = await createUser(user);
       if (created == "success") toast.success("Your account has been created");
-      else if (created == "userExist")
+      else if (created == "userExist") {
+        router.push("/auth/signin");
         toast.error("Seems you already have an account");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Oops! Something went wrong");
@@ -110,6 +120,16 @@ export const RegisterForm = () => {
 
       <Input
         {...register("password")}
+        type={showPassword ? "text" : "password"}
+        endContent={
+          <button
+            type="button"
+            className="p-2"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        }
         errorMessage={errors.password?.message}
         startContent={<FaUserLock className="w-10" />}
         isInvalid={!!errors.password}
@@ -119,6 +139,16 @@ export const RegisterForm = () => {
 
       <Input
         {...register("confirmPassword")}
+        type={showPassword ? "text" : "password"}
+        endContent={
+          <button
+            type="button"
+            className="p-2"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        }
         errorMessage={errors.confirmPassword?.message}
         startContent={<FaUserLock className="w-10" />}
         isInvalid={!!errors.confirmPassword}
