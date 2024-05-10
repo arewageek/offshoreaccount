@@ -28,18 +28,18 @@ const PasswordResetForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const { user } = useSession();
+  const { data } = useSession();
 
-  const ResetPassword: SubmitHandler<InputType> = async (data) => {
-    const passwordResetStatus = await ResetUserPassword(
-      user.data.email,
-      data.oldPassword,
-      data.newPassword
-    );
+  const ResetPassword: SubmitHandler<InputType> = async (input) => {
+    const passwordResetStatus = await ResetUserPassword({
+      email: data?.user.email,
+      oldPassword: input.oldPassword,
+      newPassword: input.newPassword,
+    });
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(ResetPassword)}>
       <Input
         {...register("oldPassword")}
         label="Old Password"

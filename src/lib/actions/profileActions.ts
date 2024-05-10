@@ -3,7 +3,7 @@
 import prisma from "../prisma";
 
 interface Props {
-  email: string;
+  email: string | undefined;
   oldPassword: string;
   newPassword: string;
 }
