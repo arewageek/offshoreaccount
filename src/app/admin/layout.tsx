@@ -1,28 +1,26 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/ReactToastify.css";
-import AuthProvders from "@/components/providers/AuthProvders";
-import AppWrapper from "@/components/providers/AppWrapper";
+import React from "react";
+import { TopNav } from "@/components/user/TopNav";
+import { Sidenav } from "@/components/user/SideNav";
 
-export const metadata: Metadata = {
-  title: "Offshore Account",
-  description: "",
-};
-
-export default function RootLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+function AdminLayout({ children }: Props) {
   return (
-    <AppWrapper>
-      <html lang="en">
-        <body>
-          <AuthProvders>{children}</AuthProvders>
-          <ToastContainer />
-        </body>
-      </html>
-    </AppWrapper>
+    <div className="px-4 md:px-7 py-5 md:py-10 max-w-screen bg-white text-gray-800 min-h-screen">
+      <div className="w-full md:flex md:justify-end">
+        <div className="w-full md:w-[80%] items-center">
+          <TopNav />
+        </div>
+      </div>
+      <div className="w-full flex justify-between flex-col md:flex-row">
+        <div className="w-[250pt] md:w-[15%] px-5 py-3 relative">
+          <Sidenav />
+        </div>
+        <div className="w-full lg:px-10 py-3">{children}</div>
+      </div>
+    </div>
   );
 }
+
+export default AdminLayout;
