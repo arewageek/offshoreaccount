@@ -38,6 +38,8 @@ const SigninForm = (props: Props) => {
   } = useForm<InputType>({ resolver: zodResolver(FormSchema) });
 
   const handleSignin: SubmitHandler<InputType> = async (data) => {
+    console.log({ data });
+
     const authenticate = await signIn("credentials", {
       email: data.email,
       password: data.password,

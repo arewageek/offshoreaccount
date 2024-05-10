@@ -5,6 +5,7 @@ import { Sidenav } from "@/components/user/SideNav";
 interface Props {
   children: React.ReactNode;
 }
+
 function AdminLayout({ children }: Props) {
   return (
     <div className="px-4 md:px-7 py-5 md:py-10 max-w-screen bg-white text-gray-800 min-h-screen">
