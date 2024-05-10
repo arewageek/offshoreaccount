@@ -12,7 +12,10 @@ interface SignupProp {
 }
 
 export async function createUser(
-  user: Omit<User, "id" | "emailVerified" | "image" | "role">
+  user: Omit<
+    User,
+    "id" | "emailVerified" | "image" | "role" | "createdAt" | "updatedAt"
+  >
 ) {
   const userExist = await prisma.user.findUnique({
     where: { email: user.email },
