@@ -9,10 +9,14 @@ const UserCard = () => {
   const user = data?.user;
 
   return (
-    <div className="bg-white shadow p-2 lg:p-5">
+    <div className="bg-white shadow p-4 lg:p-3 rounded-t-xl">
       <div
         className="w-full h-[70pt] p-4 rounded-t-xl bg-cover bg-center relative"
-        style={{ backgroundImage: "url('/src/usercard.avif')" }}
+        style={{
+          backgroundImage: "url('/src/usercard.avif')",
+          backgroundSize: "center",
+          backgroundPosition: "center",
+        }}
       >
         <div>
           <div className="rounded-full absolute overflow-hidden w-70 h-70 object-fill -bottom-5 w-full flex justify-center">
@@ -21,12 +25,12 @@ const UserCard = () => {
               width={70}
               height={70}
               alt="User Profile"
-              className="object-fill rounded-full -ml-8"
+              className="object-fill rounded-full -ml-8 p-1 bg-white"
             />
           </div>
         </div>
       </div>
-      <div className="relative w-full mt-5 text-center">
+      <div className="relative w-full mt-5 text-center lg:py-2 py-5">
         <h3 className="font-bold text-2xl">
           {user?.firstName} {user?.lastName}
         </h3>

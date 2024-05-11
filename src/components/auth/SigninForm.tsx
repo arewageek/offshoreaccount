@@ -58,14 +58,19 @@ const SigninForm = (props: Props) => {
     try {
       if (!authenticate?.ok) {
         console.log(authenticate?.error);
-        toast.error("An error occurred while authenticating");
+        // toast.error("An error occurred while authenticating");
+        toast.error(authenticate?.error);
         return false;
       }
-      toast.success("Signed in successfully!");
 
-      console.log(session?.role || session);
-      if (session?.role == "admin") router.push("/admin/");
-      else router.push("/user/");
+      if (session?.role) {
+        toast.success("Signed in successfully!");
+        const { role } = session;
+        console.log(role);
+
+        if (role == "admin") router.push("/admin/");
+        else router.push("/user/");
+      }
     } catch (err) {
       console.log(err);
       toast.error("Oops! Something went wrong");

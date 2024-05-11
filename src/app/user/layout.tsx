@@ -16,7 +16,7 @@ function UserLayouts({ children }: Props) {
       </div>
       <div className="w-full flex justify-between flex-col md:flex-row">
         <div className="w-[250pt] md:w-[15%] px-5 py-3 relative">
-          <Sidenav />
+          <Sidenav format="user" />
         </div>
         <div className="w-full lg:px-10 py-3">{children}</div>
       </div>

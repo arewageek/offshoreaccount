@@ -30,10 +30,24 @@ const AccountSettings = () => {
 
   const [session, setSession] = useState<any>({});
 
+  const [sfirstName, setFirstName] = useState<string | undefined>("");
+  const [slastName, setLastName] = useState<string | undefined>("");
+  const [semail, setEmail] = useState<string | undefined>("");
+  const [sphone, setPhone] = useState<string | undefined>("");
+
   const { data } = useSession();
 
   useEffect(() => {
-    setSession(data?.user);
+    if (data?.user) {
+      const { firstName, lastName, email, phone } = data?.user;
+
+      console.log({ firstName, lastName, email, phone });
+
+      // setFirstName(firstName || "");
+      // setLastName(lastName || "");
+      // setEmail(email || "");
+      // setPhone(phone || "");
+    }
   }, [data]);
 
   const UpdateProfile: SubmitHandler<InputType> = async (input) => {
@@ -63,7 +77,9 @@ const AccountSettings = () => {
           label="First Name"
           isInvalid={!!errors.firstName?.message}
           errorMessage={errors.firstName?.message}
-          value={session?.firstName}
+          defaultValue={sfirstName}
+          variant="flat"
+          onChange={(e) => setFirstName(e.target.value)}
         />
 
         <Input
@@ -71,21 +87,27 @@ const AccountSettings = () => {
           label="Last Name"
           isInvalid={!!errors.lastName?.message}
           errorMessage={errors.lastName?.message}
-          value={session?.lastName}
+          defaultValue={slastName}
+          variant="flat"
+          onChange={(e) => setLastName(e.target.value)}
         />
         <Input
           {...register("email")}
           label="Email Address"
           isInvalid={!!errors.email?.message}
           errorMessage={errors.email?.message}
-          value={session?.email}
+          defaultValue={semail}
+          variant="flat"
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Input
           {...register("phone")}
           label="Phone Number"
           isInvalid={!!errors.phone?.message}
           errorMessage={errors.phone?.message}
-          value={session?.phone}
+          defaultValue={sphone}
+          variant="flat"
+          onChange={(e) => setPhone(e.target.value)}
         />
 
         <div className="flex justify-end">

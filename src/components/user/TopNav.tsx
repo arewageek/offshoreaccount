@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export const TopNav = () => {
   const [showSidenav, setShowSidenav] = useState<boolean>(false);
+  const [role, setRole] = useState<string>("user");
 
   useEffect(() => {
     localStorage.setItem("sidenavvisibility", `${showSidenav}`);
@@ -15,6 +16,13 @@ export const TopNav = () => {
   const { data } = useSession();
 
   const profileImage = !data?.user.image && "/default.jpg";
+
+  useEffect(() => {
+    if (data?.user) {
+      const { role } = data?.user;
+      setRole(role);
+    }
+  }, [data]);
 
   return (
     <>
@@ -48,7 +56,7 @@ export const TopNav = () => {
         </div>
       </div>
 
-      {showSidenav && <MobileNav />}
+      {showSidenav && <MobileNav format={role} />}
     </>
   );
 };
