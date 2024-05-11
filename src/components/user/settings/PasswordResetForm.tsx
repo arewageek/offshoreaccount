@@ -54,32 +54,50 @@ const PasswordResetForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(ResetPassword)} className="grid gap-3">
-      <Input
-        {...register("oldPassword")}
-        label="Old Password"
-        isInvalid={!!errors.oldPassword?.message}
-        errorMessage={errors.oldPassword?.message}
-        type="password"
-      />
-      <Input
-        {...register("newPassword")}
-        label="New Password"
-        isInvalid={!!errors.newPassword?.message}
-        errorMessage={errors.newPassword?.message}
-        type="password"
-      />
-      <Input
-        {...register("confirmPassword")}
-        label="Confirm New Password"
-        isInvalid={!!errors.confirmPassword?.message}
-        errorMessage={errors.confirmPassword?.message}
-        type="password"
-      />
+    <form
+      onSubmit={handleSubmit(ResetPassword)}
+      className="grid gap-3 p-5 lg:p-10 rounded-lg bg-white shadow"
+    >
+      <div className="grid gap-0 mb-5">
+        <h3 className="font-bold text-2xl">Change Password</h3>
+        <span className="text-xs font-light">
+          Create a new password for your account
+        </span>
+      </div>
 
-      <Button type="submit" color="success" isLoading={isSubmitting}>
-        Change Password
-      </Button>
+      <div className="grid gap-5">
+        <Input
+          {...register("oldPassword")}
+          label="Old Password"
+          isInvalid={!!errors.oldPassword?.message}
+          errorMessage={errors.oldPassword?.message}
+          type="password"
+        />
+        <Input
+          {...register("newPassword")}
+          label="New Password"
+          isInvalid={!!errors.newPassword?.message}
+          errorMessage={errors.newPassword?.message}
+          type="password"
+        />
+        <Input
+          {...register("confirmPassword")}
+          label="Confirm New Password"
+          isInvalid={!!errors.confirmPassword?.message}
+          errorMessage={errors.confirmPassword?.message}
+          type="password"
+        />
+
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            className="text-white bg-green-600 px-10"
+            isLoading={isSubmitting}
+          >
+            Change Password
+          </Button>
+        </div>
+      </div>
     </form>
   );
 };
