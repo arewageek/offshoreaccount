@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { allUsers } from "@/lib/actions/adminActions";
 import UsersTable from "@/components/admin/UsersTable";
 
 const AdminDashboard = async () => {
