@@ -29,13 +29,13 @@ type InputType = z.infer<typeof FormSchema>;
 const SigninForm = (props: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [authenticated, setAuthenticated] = useState();
-  const [session, setSession] = useState<any>();
+  const [session, setSession] = useState<any>({});
 
   const { data } = useSession();
 
   useEffect(() => {
     setSession(data?.user);
-  }, [authenticated]);
+  }, [authenticated, data]);
 
   const router = useRouter();
 
@@ -63,7 +63,7 @@ const SigninForm = (props: Props) => {
       }
       toast.success("Signed in successfully!");
 
-      console.log(session.role);
+      console.log(session?.role || session);
       if (session?.role == "admin") router.push("/admin/");
       else router.push("/user/");
     } catch (err) {
