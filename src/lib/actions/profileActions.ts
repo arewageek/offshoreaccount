@@ -61,9 +61,17 @@ export async function updateProfile({
 }
 
 export async function allUsers() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
 
   console.log(users);
 
   return users;
+}
+
+export async function getUserData({ id }: { id: string }) {
+  const user = await prisma.user.findUnique({ where: { id } });
+
+  if (!user) throw new Error("Invalid User ID ");
+
+  return user;
 }

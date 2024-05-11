@@ -18,7 +18,17 @@ const FormSchema = z.object({
 
 type InputType = z.infer<typeof FormSchema>;
 
-const AccountSettings = () => {
+const AccountSettings = ({
+  firstName,
+  lastName,
+  phone,
+  email,
+}: {
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  email: string | null;
+}) => {
   const {
     handleSubmit,
     reset,
@@ -35,7 +45,9 @@ const AccountSettings = () => {
   const [semail, setEmail] = useState<string | undefined>("");
   const [sphone, setPhone] = useState<string | undefined>("");
 
-  const { data } = useSession();
+  const passedData = { data: { user: { firstName, lastName, email, phone } } };
+
+  const { data } = passedData ? passedData : useSession();
 
   useEffect(() => {
     if (data?.user) {

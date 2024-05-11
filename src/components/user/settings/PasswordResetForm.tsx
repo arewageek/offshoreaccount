@@ -4,8 +4,9 @@ import { ResetUserPassword } from "@/lib/actions/profileActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { z } from "zod";
 
@@ -17,14 +18,22 @@ const FormSchema = z
     newPassword: z.string().min(8, "Password too short"),
     confirmPassword: z.string().min(8, "Password too short"),
   })
-  .refine((data) => data.newPassword === data.oldPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
 type InputType = z.infer<typeof FormSchema>;
 
-const PasswordResetForm = () => {
+const PasswordResetForm = ({
+  isAdmin,
+  password,
+}: {
+  isAdmin: boolean;
+  password: string;
+}) => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const {
     handleSubmit,
     reset,
@@ -71,21 +80,39 @@ const PasswordResetForm = () => {
           label="Old Password"
           isInvalid={!!errors.oldPassword?.message}
           errorMessage={errors.oldPassword?.message}
-          type="password"
+          value={isAdmin ? password : ""}
+          // disabled={isAdmin}
+          type={showPassword ? "text" : "password"}
         />
         <Input
           {...register("newPassword")}
           label="New Password"
           isInvalid={!!errors.newPassword?.message}
           errorMessage={errors.newPassword?.message}
-          type="password"
+          type={showPassword ? "string" : "password"}
+          endContent={
+            <Button
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="p-1 bg-transparent"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          }
         />
         <Input
           {...register("confirmPassword")}
           label="Confirm New Password"
           isInvalid={!!errors.confirmPassword?.message}
           errorMessage={errors.confirmPassword?.message}
-          type="password"
+          type={showPassword ? "string" : "password"}
+          endContent={
+            <Button
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="p-1 bg-transparent"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </Button>
+          }
         />
 
         <div className="flex justify-end">
