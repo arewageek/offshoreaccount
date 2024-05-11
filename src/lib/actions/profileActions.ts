@@ -59,3 +59,11 @@ export async function updateProfile({
 
   return "unknownError";
 }
+
+export async function allUsers() {
+  const users = await prisma.user.findMany();
+
+  console.log(users);
+
+  return users;
+}
