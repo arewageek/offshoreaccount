@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { allUsers } from "@/lib/actions/profileActions";
 import Image from "next/image";
+import Link from "next/link";
+import { FaFileAlt } from "react-icons/fa";
 
 const UsersTable = () => {
   const [page, setPage] = useState(1);
@@ -73,6 +75,7 @@ const UsersTable = () => {
         <TableColumn key="firstName">NAME</TableColumn>
         <TableColumn key="email">EMAIL</TableColumn>
         <TableColumn key="phone">PHONE NUMBER</TableColumn>
+        <TableColumn key="url"> </TableColumn>
       </TableHeader>
       <TableBody items={items}>
         {(item) => (
@@ -102,6 +105,16 @@ const UsersTable = () => {
             <TableCell className="py-4 lg:py-8">
               <div>Phone</div>
               <div className="text-xl font-bold">{item.phone}</div>
+            </TableCell>
+            <TableCell className="py-4 lg:py-8">
+              <div className="w-[50pt] flex items-center justify-center">
+                <Link
+                  href={`/admin/user/${item.id}`}
+                  className="bg-green-300 text-black p-3 rounded-full"
+                >
+                  <FaFileAlt />
+                </Link>
+              </div>
             </TableCell>
           </TableRow>
         )}
