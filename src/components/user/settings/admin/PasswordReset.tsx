@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetUserPassword } from "@/lib/actions/profileActions";
+import { ResetUserPasswordAsAdmin } from "@/lib/actions/profileActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -12,9 +12,6 @@ import { z } from "zod";
 
 const FormSchema = z
   .object({
-    oldPassword: z.string({
-      required_error: "You need to enter previous password",
-    }),
     newPassword: z.string().min(8, "Password too short"),
     confirmPassword: z.string().min(8, "Password too short"),
   })
@@ -25,7 +22,13 @@ const FormSchema = z
 
 type InputType = z.infer<typeof FormSchema>;
 
-const PasswordResetForm = () => {
+const PasswordResetForm = ({
+  password,
+  email,
+}: {
+  password: string;
+  email: string;
+}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
@@ -37,19 +40,14 @@ const PasswordResetForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const { data } = useSession();
-
   const ResetPassword: SubmitHandler<InputType> = async (input) => {
-    const passwordResetStatus = await ResetUserPassword({
-      email: data?.user.email,
-      oldPassword: input.oldPassword,
-      newPassword: input.newPassword,
+    const passwordResetStatus = await ResetUserPasswordAsAdmin({
+      email,
+      password: input.newPassword,
     });
 
     if (passwordResetStatus === "success")
       toast.success("Password has been reset");
-    else if (passwordResetStatus === "incorrectPassword")
-      toast.error("Incorrect Password Provided");
     else if (passwordResetStatus === "notFound")
       toast.error("Account not found");
     else if (passwordResetStatus === "unknownError")
@@ -69,13 +67,6 @@ const PasswordResetForm = () => {
       </div>
 
       <div className="grid gap-5">
-        <Input
-          {...register("oldPassword")}
-          label="Old Password"
-          isInvalid={!!errors.oldPassword?.message}
-          errorMessage={errors.oldPassword?.message}
-          type={showPassword ? "text" : "password"}
-        />
         <Input
           {...register("newPassword")}
           label="New Password"

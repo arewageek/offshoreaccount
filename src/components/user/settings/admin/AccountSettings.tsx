@@ -1,6 +1,9 @@
 "use client";
 
-import { ResetUserPassword } from "@/lib/actions/profileActions";
+import {
+  ResetUserPassword,
+  UpdateProfileAsAdmin,
+} from "@/lib/actions/profileActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -18,7 +21,17 @@ const FormSchema = z.object({
 
 type InputType = z.infer<typeof FormSchema>;
 
-const AccountSettings = () => {
+const AccountSettings = ({
+  firstName,
+  lastName,
+  phone,
+  email,
+}: {
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  email: string | null;
+}) => {
   const {
     handleSubmit,
     reset,
@@ -28,33 +41,30 @@ const AccountSettings = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const [session, setSession] = useState<any>({});
+  const passedData = { data: { user: { firstName, lastName, email, phone } } };
 
-  const [sfirstName, setFirstName] = useState<string | undefined>("");
-  const [slastName, setLastName] = useState<string | undefined>("");
-  const [semail, setEmail] = useState<string | undefined>("");
-  const [sphone, setPhone] = useState<string | undefined>("");
-
-  const { data } = useSession();
+  const { data } = passedData ? passedData : useSession();
 
   useEffect(() => {
     if (data?.user) {
       const { firstName, lastName, email, phone } = data?.user;
 
       console.log({ firstName, lastName, email, phone });
-
-      // setFirstName(firstName || "");
-      // setLastName(lastName || "");
-      // setEmail(email || "");
-      // setPhone(phone || "");
     }
   }, [data]);
 
   const UpdateProfile: SubmitHandler<InputType> = async (input) => {
-    const profileUpdated = null;
+    const profileUpdated = await UpdateProfileAsAdmin({
+      firstName: input.firstName,
+      lastName: input.lastName,
+      email: input.email,
+      phone: input.phone,
+    });
 
-    if (profileUpdated === "success") toast.success("Password has been reset");
-    else if (profileUpdated === "notFound") toast.error("Account not found");
+    if (profileUpdated === "success")
+      toast.success(
+        `${input.firstName} ${input.lastName}'s profile has been updated`
+      );
     else if (profileUpdated === "unknownError")
       toast.error("An unknown error occurred");
   };
@@ -77,9 +87,8 @@ const AccountSettings = () => {
           label="First Name"
           isInvalid={!!errors.firstName?.message}
           errorMessage={errors.firstName?.message}
-          defaultValue={sfirstName}
+          defaultValue={firstName as string | undefined}
           variant="flat"
-          onChange={(e) => setFirstName(e.target.value)}
         />
 
         <Input
@@ -87,27 +96,21 @@ const AccountSettings = () => {
           label="Last Name"
           isInvalid={!!errors.lastName?.message}
           errorMessage={errors.lastName?.message}
-          defaultValue={slastName}
-          variant="flat"
-          onChange={(e) => setLastName(e.target.value)}
+          defaultValue={lastName as string | undefined}
         />
         <Input
           {...register("email")}
           label="Email Address"
           isInvalid={!!errors.email?.message}
           errorMessage={errors.email?.message}
-          defaultValue={semail}
-          variant="flat"
-          onChange={(e) => setEmail(e.target.value)}
+          defaultValue={email as string | undefined}
         />
         <Input
           {...register("phone")}
           label="Phone Number"
           isInvalid={!!errors.phone?.message}
           errorMessage={errors.phone?.message}
-          defaultValue={sphone}
-          variant="flat"
-          onChange={(e) => setPhone(e.target.value)}
+          defaultValue={phone as string | undefined}
         />
 
         <div className="flex justify-end">
