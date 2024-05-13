@@ -1,10 +1,15 @@
-import ContactForm from "@/components/forms/contactForm";
-import { AvailableCards } from "@/components/user/AvailableCards";
-import AccountSettings from "@/components/user/settings/admin/AccountSettings";
-import PasswordResetForm from "@/components/user/settings/admin/PasswordReset";
-import UploadImage from "@/components/user/settings/admin/UploadImage";
-import UserCard from "@/components/user/settings/UserCard";
+import RecentTransactions from "@/components/admin/RecentTransactions";
+import { AvailableCards } from "@/components/user/settings/admin/AvailableCards";
+import CreateCardButton from "@/components/user/settings/admin/CreateCardButton";
+import { UpcomingPayments } from "@/components/user/UpcomingPayments";
 import { getUserData } from "@/lib/actions/profileActions";
+import {
+  Button,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaFileAlt } from "react-icons/fa";
@@ -12,18 +17,19 @@ import { FaFileAlt } from "react-icons/fa";
 const UserProfile = async (id: { params: { id: string } }) => {
   const user = await getUserData({ id: id.params.id });
 
-  console.log({ user });
+  // console.log({ user });
 
   const { firstName, lastName, email, phone, image, role, password } = user;
+  const plainId = id.params.id;
 
   return (
-    <main className="w-full lg:px-10 lg:py-20 py-10 rounded-3xl flex flex-wrap  bg-green-200">
+    <main className="w-full lg:px-10 lg:py-10 py-10 rounded-3xl flex flex-wrap  bg-green-100">
       <div className="w-full lg:w-full px-3 flex flex-col lg:flex-row gap-10">
-        <div className="py-6 lg:py-10 px-10">
-          <div className="flex gap-3">
+        <div className="py-6 lg:py-10 px-10 w-full">
+          <div className="flex gap-3 items-center">
             <div>
               <Image
-                src={user.image as string}
+                src={user.image ? (user.image as string) : "/default.jpg"}
                 height={60}
                 width={60}
                 alt={firstName as string}
@@ -37,17 +43,33 @@ const UserProfile = async (id: { params: { id: string } }) => {
               </h2>
             </div>
             <Link href={`/admin/user/${id.params.id}/edit`}>
-              <div className="rounded-full p-3 text-black bg-green-400">
+              <div className="rounded-full p-3 text-xs text-black bg-green-400 ml-3 hover:bg-green-500 transition">
                 <FaFileAlt />
               </div>
             </Link>
           </div>
 
-          <div className="flex gap-3 lg:flex-row flex-col mt-10">
-            <div>
-              <AvailableCards />
+          <div className="flex gap-3 lg:flex-row flex-col mt-10 w-full">
+            <div className="lg:w-1/2">
+              <div className=" lg:w-3/5">
+                <AvailableCards user={id.params.id} />
+                <div className="py-3 px-3">
+                  <CreateCardButton id={plainId} />
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:w-1/2">
+              <div>
+                <h3 className="font-bold text-lg">Upcoming Payments</h3>
+                <div className="py-5">
+                  <UpcomingPayments count={1} />
+                </div>
+              </div>
             </div>
           </div>
+
+          <RecentTransactions id={id.params.id} />
         </div>
       </div>
     </main>
