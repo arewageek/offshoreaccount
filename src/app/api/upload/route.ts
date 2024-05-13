@@ -13,21 +13,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ upload: false });
   }
 
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    return NextResponse.json({ upload: false });
+  }
+
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
   console.log(buffer);
 
-  const path = join(process.cwd(), "/public/uploads", `${file.name}`);
+  const fileName = `${user.id}_${file.name}`;
+
+  const path = join("/", "/uploads", `/${file.name}`);
 
   await writeFile(path, buffer, "utf-8", (err) => console.log(err));
 
   console.log(`Open ${path} to see the uploaded file`);
-
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    return NextResponse.json({ upload: false });
-  }
 
   await prisma.user.update({
     where: { email },

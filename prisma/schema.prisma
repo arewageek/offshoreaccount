@@ -87,6 +87,35 @@ model Messages {
   @@unique([id])
 }
 
+model Cards { 
+  id String @id @default(cuid())
+  user String
+  cardNumber  String
+  cardName  String
+  provider  String
+  cvv String
+  expireDate String
+  currency  String @default("USD")
+  balance Int @default(0)
+
+  @@unique([id])
+}
+
+model Transactions {
+  id  String @id @default(cuid())
+  user  String
+  accountName  String
+  accountNumber  String
+  bankName  String
+  routingNumber String
+  swiftCode String
+  amount Int
+  createAt  DateTime
+  status  String  @default("pending")
+
+  @@unique([id])
+}
+
 model Authenticator {
   id                   String  @id @default(cuid())
   credentialID         String  @unique

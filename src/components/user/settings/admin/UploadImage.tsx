@@ -56,12 +56,18 @@ const UploadImage = ({ email }: { email: string }) => {
       </div>
 
       <div className="gap-5 flex flex-col lg:flex-row">
-        <input
-          type="file"
-          name="image"
-          onChange={(e) => setFile(e.target.files?.[0])}
-          className="py-4 px-3 border-1"
-        />
+        <label className="w-full">
+          <div className="w-full h-full rounded-full border-dashed border-2 border-green-500 text-xs font-bold italic px-4 py-4">
+            {file ? file.name : "Attach Image"}
+          </div>
+          <input
+            type="file"
+            name="image"
+            onChange={(e) => setFile(e.target.files?.[0])}
+            className="py-4 px-3 flex-1 border-none outline-none hidden"
+            accept="jpg, jpeg, png, avif"
+          />
+        </label>
         <Button type="submit" className="text-white bg-green-600 px-10 h-full">
           <FaCloudUploadAlt className="text-4xl" />
         </Button>

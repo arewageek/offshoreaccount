@@ -89,8 +89,6 @@ export async function updateProfile({
 export async function allUsers() {
   const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
 
-  console.log(users);
-
   return users;
 }
 
@@ -154,3 +152,64 @@ export async function UpdateProfileAsAdmin({
 //     console.log(e);
 //   }
 // }
+
+export async function getCards({ id }: { id: string }): Promise<
+  | "userNotFound"
+  | "noValidCardsFound"
+  | {
+      id: string;
+      user: string;
+      cardNumber: string;
+      cardName: string;
+      provider: string;
+      cvv: string;
+      expireDate: string;
+      currency: string;
+      balance: number;
+    }[]
+> {
+  const user = await prisma.user.findUnique({ where: { id } });
+
+  if (!user) return "userNotFound";
+
+  const cards = await prisma.cards.findMany({ where: { user: id } });
+  if (!cards) return "noValidCardsFound";
+
+  return cards;
+}
+
+export async function generateCard({
+  id,
+  amount,
+}: {
+  id: string;
+  amount: number;
+}): Promise<"failed" | "success" | "userNofFound"> {
+  // demo data for cards
+  const cardProviders = ["mastercard", "visa", "verve"];
+  const currency = ["usd"];
+
+  // user data
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) return "userNofFound";
+
+  // generate random card data
+
+  const cardData = {
+    user: user.id,
+    cardNumber: `${Math.floor(Math.random() * 9999999999999999)}`,
+    cardName: `${user?.firstName} ${user?.lastName}`,
+    provider: cardProviders[Math.floor(Math.random() * cardProviders.length)],
+    cvv: `${Math.floor(Math.random() * 999)}`,
+    expireDate: `${Math.floor(Math.random() * 12) + 1}/${Math.floor(
+      Math.random() * 100
+    )}`,
+    currency: currency[Math.floor(Math.random() * currency.length)],
+    balance: amount,
+  };
+
+  const createCard = await prisma.cards.create({ data: { ...cardData } });
+
+  if (createCard) return "success";
+  return "failed";
+}
