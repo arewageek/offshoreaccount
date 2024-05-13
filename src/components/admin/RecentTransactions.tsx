@@ -4,7 +4,7 @@ import React from "react";
 import { FaFileAlt } from "react-icons/fa";
 
 const RecentTransactions = ({ id }: { id: string }) => {
-  const transactions = allTransactionsPerUser({ id });
+  const transactions = allTransactionsPerUser({ user: id });
 
   console.log(transactions);
 
