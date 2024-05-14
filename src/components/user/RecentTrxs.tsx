@@ -1,4 +1,9 @@
-import React from "react";
+"use client";
+
+import { getTrxFromClient } from "@/lib/actions/getDataFromClient";
+import { allTransactionsPerUser } from "@/lib/actions/transactonsAction";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 import {
   FaBus,
   FaCar,
@@ -11,14 +16,33 @@ import {
 } from "react-icons/fa";
 
 export const RecentTrxs = () => {
-  const transactions = [
+  const { data } = useSession();
+  const user = data?.user;
+
+  const [trxs, setTrxs] = useState<
     {
-      icon: <FaCar />,
-      title: "Taxi Trips",
-      date: "09 March, 2024, 15:42",
-      amount: 56.5,
-    },
-  ];
+      id: string;
+      user: string;
+      desc: string;
+      accountName: string;
+      accountNumber: string;
+      bankName: string;
+      routingNumber: string;
+      swiftCode: string;
+      amount: number;
+      createAt: Date;
+      status: string;
+    }[]
+  >([]);
+
+  const getTrx = async () => {
+    const transactions = await getTrxFromClient({ user: user?.id as string });
+    setTrxs(transactions);
+  };
+
+  useEffect(() => {
+    getTrx();
+  }, []);
 
   return (
     <div className="lg:my-20 my-5">
@@ -33,41 +57,31 @@ export const RecentTrxs = () => {
       <div className="overflow-x-auto w-full py-5 pr-2">
         <table className="table table-auto w-full font-[450]">
           <tbody>
-            {transactions.map((trx, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index != transactions.length - 1 && "border-b-4"
-                } py-5 border-slate-200 text-slate-800`}
-              >
-                <td className="py-5 pr-4">
-                  <div className="flex items-center w-fit">{trx.title}</div>
-                </td>
-                <td className="py-5 px-4">
-                  <div className="flex items-center w-fit text-slate-600">
-                    {trx.date}
-                  </div>
-                </td>
-                <td className="py-5 px-4">
-                  <div className="flex items-center w-fit font-bold text-slate-700">
-                    ${trx.amount}
-                  </div>
-                </td>
-                <td className="">
-                  <div className="flex items-center space-x-1 h-full">
-                    <span className="h-1 w-1 bg-slate-700 rounded-full">
-                      &nbsp;
-                    </span>
-                    <span className="h-1 w-1 bg-slate-700 rounded-full">
-                      &nbsp;
-                    </span>
-                    <span className="h-1 w-1 bg-slate-700 rounded-full">
-                      &nbsp;
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {trxs.length > 0 &&
+              trxs.map((trx, index) => (
+                <tr
+                  key={index}
+                  className={`${
+                    index != trxs.length - 1 && "border-b-4"
+                  } py-5 border-slate-200 text-slate-800`}
+                >
+                  <td className="py-5 pr-4">
+                    <div className="flex items-center w-fit capitalize">
+                      {trx?.desc}
+                    </div>
+                  </td>
+                  <td className="py-5 px-4">
+                    <div className="flex items-center w-fit text-slate-600">
+                      {trx.createAt.toDateString()}
+                    </div>
+                  </td>
+                  <td className="py-5 px-4">
+                    <div className="flex items-center w-fit font-bold text-slate-700">
+                      ${trx.amount}
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

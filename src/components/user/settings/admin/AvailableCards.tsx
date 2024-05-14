@@ -1,5 +1,6 @@
 import { getCards } from "@/lib/actions/profileActions";
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 import {
   FaCcMastercard,
   FaCcVisa,
@@ -21,8 +22,7 @@ export const AvailableCards = async ({ user }: { user: string }) => {
       </div>
 
       <div className="mt-5">
-        {cards != "userNotFound" &&
-          cards != "noValidCardsFound" &&
+        {cards &&
           cards.map((card, index) => (
             <div key={index} className="flex items-center gap-4">
               <div className="w-full py-7 px-6 rounded-3xl bg-green-200 flex justify-between my-3">
@@ -51,11 +51,14 @@ export const AvailableCards = async ({ user }: { user: string }) => {
                 </div>
               </div>
 
-              <div className="h-fit w-fit flex justify-center items-center">
+              <Link
+                href={`/admin/cards/${card.id}`}
+                className="h-fit w-fit flex justify-center items-center"
+              >
                 <div className="rounded-full text-sm p-3 bg-green-300 text-black hover:bg-green-400 cursor-pointer transition">
                   <FaFileAlt />
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
       </div>

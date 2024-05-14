@@ -1,17 +1,29 @@
-// import { fsUserCards } from "@/lib/user";
 import React from "react";
 
-export const VirtualCard = async () => {
-  type Card = {
-    name: string;
-    number: string;
-    valid: string;
-  };
+type Card = {
+  cardName: string | undefined;
+  cardNumber: string | undefined;
+  expire: string | undefined;
+  cvv: string | undefined;
+  balance: number | undefined;
+  currency: string | undefined;
+};
 
-  const card = {
-    name: "demo name",
-    valid: "03/25",
-    number: "4642 3489 9867 7632",
+export const VirtualCard = async ({
+  expire,
+  cardName,
+  cardNumber,
+  cvv,
+  balance,
+  currency,
+}: Card) => {
+  const card: Card = {
+    cardName: cardName,
+    expire: expire,
+    cardNumber: cardNumber,
+    cvv: cvv,
+    balance,
+    currency,
   };
 
   return (
@@ -26,7 +38,7 @@ export const VirtualCard = async () => {
           <div className="">
             <p className="font-light text-sm lg:text-lg">Name</p>
             <p className="font-medium tracking-widest text-sm lg:text-lg">
-              {card?.name || "Richard Fred"}
+              {card?.cardName}
             </p>
           </div>
           <img className="w-14 h-14" src="https://i.imgur.com/bbPHJVe.png" />
@@ -34,28 +46,29 @@ export const VirtualCard = async () => {
         <div className="pt-0">
           <p className="font-light text-sm lg:text-lg">Card Number</p>
           <p className="font-medium tracking-more-wider text-sm lg:text-lg">
-            {card?.number || "4642 3489 9867 7632"}
+            {card?.cardNumber}
           </p>
         </div>
         <div className="pt-4 pr-6">
           <div className="flex justify-between">
             <div className="">
-              <p className="font-light text-xs">Valid</p>
-              <p className="font-medium tracking-wider text-[10pt] lg:text-sm">
-                11/15
+              <p className="font-light text-xs">Balance</p>
+              <p className="font-medium tracking-wider text-[10pt] lg:text-sm uppercase">
+                {card?.balance?.toLocaleString()} {card?.currency}
               </p>
             </div>
+
             <div className="">
               <p className="font-light text-xs">Expiry</p>
               <p className="font-medium tracking-wider text-[10pt] lg:text-sm">
-                {card?.valid || "03/25"}
+                {card?.expire}
               </p>
             </div>
 
             <div className="">
               <p className="font-light text-xs">CVV</p>
               <p className="font-bold tracking-more-wider text-[10pt] lg:text-sm">
-                ···
+                {card.cvv}
               </p>
             </div>
           </div>
