@@ -158,7 +158,8 @@ export const RegisterForm = () => {
 
       <Button
         type="submit"
-        color="primary"
+        color="success"
+        variant="shadow"
         isLoading={isSubmitting}
         className="py-7 w-full font-bold"
       >

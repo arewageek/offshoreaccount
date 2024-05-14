@@ -17,20 +17,20 @@ const Dashboard = () => {
             <AvailableCards />
           </div>
 
-          <div className="w-full h-fit md:w-full lg:w-2/5 lg:px-8 py-3">
+          <div className="w-full h-fit md:w-full lg:w-2/5 lg:pl-2 py-3">
             <div className="mb-10 my-2">
               <h4 className="font-bold">Upcoming Payments</h4>
             </div>
-            <UpcomingPayments count={1} />
+            <UpcomingPayments sideBtn={true} count={1} />
           </div>
 
-          <div className="w-full lg:px-8 py-3">
+          <div className="w-full lg:pl-8 pr-3 py-3">
             <RecentTrxs />
           </div>
         </div>
       </div>
 
-      <div className="w-full md:w-full lg:w-2/5 lg:px-16">
+      <div className="w-full md:w-full lg:w-2/5 lg:px-4">
         <QuickTransfer />
       </div>
     </main>

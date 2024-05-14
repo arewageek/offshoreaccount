@@ -62,7 +62,7 @@ const UserProfile = async (id: { params: { id: string } }) => {
               <div>
                 <h3 className="font-bold text-lg">Upcoming Payments</h3>
                 <div className="py-5">
-                  <UpcomingPayments count={1} />
+                  <UpcomingPayments count={1} sideBtn={false} />
                 </div>
               </div>
             </div>

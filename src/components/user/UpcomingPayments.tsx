@@ -3,7 +3,13 @@ import Link from "next/link";
 import React from "react";
 import { FaCoins, FaCouch, FaFile, FaFileAlt } from "react-icons/fa";
 
-export const UpcomingPayments = ({ count }: { count: number }) => {
+export const UpcomingPayments = ({
+  count,
+  sideBtn,
+}: {
+  count: number;
+  sideBtn: boolean;
+}) => {
   const payments = [
     {
       icon: <FaCouch />,
@@ -54,7 +60,7 @@ export const UpcomingPayments = ({ count }: { count: number }) => {
                 </div>
               </div>
 
-              {count <= 2 && (
+              {sideBtn && (
                 <Link
                   href="/user/payments"
                   className="bg-green-300 text-black p-3 rounded-full"

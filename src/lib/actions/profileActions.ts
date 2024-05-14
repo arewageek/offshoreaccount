@@ -197,9 +197,7 @@ export async function generateCard({
     cardName: `${user?.firstName} ${user?.lastName}`,
     provider: cardProviders[Math.floor(Math.random() * cardProviders.length)],
     cvv: `${Math.floor(Math.random() * 999)}`,
-    expireDate: `${Math.floor(Math.random() * 12) + 1}/${Math.floor(
-      Math.random() * 100
-    )}`,
+    expireDate: "01/27",
     currency: currency[Math.floor(Math.random() * currency.length)],
     balance: amount,
   };

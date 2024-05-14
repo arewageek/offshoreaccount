@@ -111,6 +111,7 @@ const SigninForm = (props: Props) => {
         color="success"
         isLoading={isSubmitting}
         className="py-7 w-full font-bold"
+        variant="shadow"
       >
         Sign Me In
       </Button>
