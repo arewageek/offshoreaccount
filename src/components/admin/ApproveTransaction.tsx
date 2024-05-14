@@ -49,7 +49,7 @@ const ApproveTransaction = ({
         <div>
           <div className="rounded-full absolute overflow-hidden w-70 h-70 object-fill -bottom-5 w-full flex justify-center">
             <Image
-              src={image || "/src/personguy.jpg"}
+              src={image || "/src/default.png"}
               width={70}
               height={70}
               alt="User Profile"

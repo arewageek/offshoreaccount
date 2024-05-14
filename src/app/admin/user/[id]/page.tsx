@@ -28,7 +28,7 @@ const UserProfile = async (id: { params: { id: string } }) => {
           <div className="flex gap-3 items-center">
             <div>
               <Image
-                src={user?.image ? (user?.image as string) : "/default.jpg"}
+                src={user?.image ? (user?.image as string) : "/default.png"}
                 height={60}
                 width={60}
                 alt={user?.firstName as string}

@@ -85,7 +85,7 @@ const UsersTable = () => {
           >
             <TableCell>
               <Image
-                src={item.image ? item.image : "/default.jpg"}
+                src={item.image ? item.image : "/default.png"}
                 width={140}
                 height={140}
                 alt={item.firstName}

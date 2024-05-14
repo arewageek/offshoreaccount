@@ -1,8 +1,7 @@
-import ContactForm from "@/components/forms/contactForm";
 import AccountSettings from "@/components/user/settings/admin/AccountSettings";
 import PasswordResetForm from "@/components/user/settings/admin/PasswordReset";
 import UploadImage from "@/components/user/settings/admin/UploadImage";
-import UserCard from "@/components/user/settings/UserCard";
+import UserCard from "@/components/user/settings/admin/UserCard";
 import { getUserData } from "@/lib/actions/profileActions";
 
 const UserAccountSettings = async (id: { params: { id: string } }) => {
