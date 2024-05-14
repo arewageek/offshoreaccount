@@ -9,7 +9,7 @@ const Settings = async () => {
     <main className="w-full lg:px-10 lg:py-20 py-10 rounded-3xl flex flex-wrap">
       <div className="w-full md:w-full px-3 flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2 grid gap-10">
-          {/* <UserCard  /> */}
+          <UserCard />
           <PasswordResetForm />
         </div>
 

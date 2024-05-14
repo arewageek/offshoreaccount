@@ -15,7 +15,7 @@ export const TopNav = () => {
 
   const { data } = useSession();
 
-  const profileImage = !data?.user.image && "/default.jpg";
+  const profileImage = data?.user.image || "/default.png";
 
   useEffect(() => {
     if (data?.user) {
