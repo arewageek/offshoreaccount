@@ -6,6 +6,9 @@ import { Button, Input } from "@nextui-org/react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createTransaction } from "@/lib/actions/transactonsAction";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
   accountName: z.string().min(3, "Name too short"),
@@ -21,9 +24,7 @@ type InputType = z.infer<typeof FormSchema>;
 export const QuickTransfer = () => {
   const [showModal, setShowModal] = useState(false);
 
-  function handleTransfer() {
-    setShowModal(true);
-  }
+  const { data } = useSession();
 
   function closeModal() {
     setShowModal(false);
@@ -37,15 +38,30 @@ export const QuickTransfer = () => {
     reset,
   } = useForm<InputType>({ resolver: zodResolver(FormSchema) });
 
-  const makeTransfer: SubmitHandler<InputType> = async (data) => {
-    // alert("Please contact customer service for support");
+  const handleTransfer: SubmitHandler<InputType> = async (input) => {
+    const transferred = await createTransaction({
+      user: data?.user.id,
+      accountName: input.accountName,
+      accountNumber: input.accountNumber,
+      bankName: input.bankName,
+      routingNumber: input.routingNumber,
+      swiftCode: input.swiftCode,
+      amount: input.amount as unknown as number,
+    });
+
+    if (!transferred) {
+      toast.error("Failed to complete tranaction");
+      return;
+    }
+
+    toast.success("Transaction Initiated");
     setShowModal(true);
   };
 
   return (
     <div>
       <div className="rounded-3xl bg-green-100 flex flex-col space-y-5 px-2.5 lg:px-6 lg:py-20 py-5">
-        <form onSubmit={handleSubmit(makeTransfer)}>
+        <form onSubmit={handleSubmit(handleTransfer)}>
           <div className="bg-green-300 py-5 lg:py-10 px-5 rounded-3xl grid gap-4">
             <h4 className="font-bold text-lg">Quick Transfer</h4>
 
@@ -88,6 +104,7 @@ export const QuickTransfer = () => {
               {...register("amount")}
               label="Amount"
               size="lg"
+              type="number"
               startContent="$"
               errorMessage={errors.amount?.message}
               isInvalid={!!errors.amount?.message}

@@ -1,6 +1,7 @@
 "use client";
 
 import { UpdateProfileAsAdmin } from "@/lib/actions/profileActions";
+import { updateTrx } from "@/lib/actions/transactonsAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -15,7 +16,7 @@ const FormSchema = z.object({
   bankName: z.string().min(4, "Bank Name too short"),
   routingNumber: z.string().min(7, "Invalid Routing Number"),
   swiftCode: z.string().min(7, "Invalid Swift Code"),
-  amount: z.number(),
+  amount: z.string(),
 });
 
 type InputType = z.infer<typeof FormSchema>;
@@ -27,6 +28,7 @@ const TransactionDetails = ({
   routingNumber,
   swiftCode,
   amount,
+  id,
 }: {
   accountName: string | undefined;
   accountNumber: string | undefined;
@@ -34,6 +36,7 @@ const TransactionDetails = ({
   routingNumber: string | undefined;
   swiftCode: string | undefined;
   amount: number | undefined;
+  id: string | undefined;
 }) => {
   const {
     handleSubmit,
@@ -44,8 +47,23 @@ const TransactionDetails = ({
     resolver: zodResolver(FormSchema),
   });
 
-  const updateTransactionData = ({}) => {
-    return false;
+  const updateTransactionData: SubmitHandler<InputType> = (data) => {
+    const updated = updateTrx({
+      accountName: data.accountName,
+      accountNumber: data.accountNumber,
+      bankName: data.bankName,
+      swiftCode: data.swiftCode,
+      routingNumber: data.routingNumber,
+      amount: data.amount,
+      id: id,
+    });
+
+    if (!updated) {
+      toast.error("Failed to update transactin details");
+      return;
+    }
+    toast.success("Transaction details have be updated");
+    return;
   };
 
   return (

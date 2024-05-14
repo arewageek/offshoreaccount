@@ -10,29 +10,30 @@ const UserAccountSettings = async (id: { params: { id: string } }) => {
 
   console.log({ user });
 
-  const { firstName, lastName, email, phone, image, role, password } = user;
-
   return (
     <main className="w-full lg:px-10 lg:py-20 py-10 rounded-3xl flex flex-wrap">
       <div className="w-full lg:w-full px-3 flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2 grid gap-10">
           <UserCard
-            firstName={firstName}
-            lastName={lastName}
-            image={image}
-            role={role}
+            firstName={user?.firstName as string}
+            lastName={user?.lastName as string}
+            image={user?.image as string}
+            role={user?.role as string}
           />
-          <PasswordResetForm email={email} password={password} />
+          <PasswordResetForm
+            email={user?.email as string}
+            password={user?.password as string}
+          />
         </div>
 
         <div className="w-full lg:w-1/2 grid gap-10">
           <AccountSettings
-            firstName={firstName}
-            lastName={lastName}
-            phone={phone}
-            email={email}
+            firstName={user?.firstName as string}
+            lastName={user?.lastName as string}
+            phone={user?.phone as string}
+            email={user?.email as string}
           />
-          <UploadImage email={email} />
+          <UploadImage email={user?.email as string} />
         </div>
       </div>
     </main>

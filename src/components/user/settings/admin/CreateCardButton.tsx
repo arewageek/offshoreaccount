@@ -1,16 +1,21 @@
 "use client";
 import { generateCard } from "@/lib/actions/profileActions";
 import { Button, Input } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 export default function CreateCardButton({ id }: { id: string }) {
+  const router = useRouter();
+
   const createCard = async () => {
     const created = await generateCard({ id: id, amount });
 
     if (created === "success") {
       toast.success("New card has been generated");
+      router.refresh();
+
       return;
     }
 

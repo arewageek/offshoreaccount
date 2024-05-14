@@ -1,12 +1,15 @@
 "use client";
 
 import { Button, Input } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const UploadImage = ({ email }: { email: string }) => {
   const [file, setFile] = useState<File>();
+
+  const router = useRouter();
 
   const UploadFile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +32,7 @@ const UploadImage = ({ email }: { email: string }) => {
       }
 
       toast.success("File uploaded successfully");
+      router.refresh();
     } catch (e) {
       console.log(e);
       toast.error("An unknown error occurred");
