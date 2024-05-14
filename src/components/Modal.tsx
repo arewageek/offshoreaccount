@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaTimesCircle } from "react-icons/fa";
 
@@ -11,7 +12,11 @@ interface Props {
 }
 
 const Modal = ({ title, message, visible, close }: Props) => {
-  const closeModal = () => close();
+  const router = useRouter();
+  const closeModal = () => {
+    close();
+    router.refresh();
+  };
 
   return (
     <div

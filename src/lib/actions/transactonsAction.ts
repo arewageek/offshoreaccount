@@ -17,7 +17,7 @@ export async function getTranaction({ id }: { id: string }) {
     where: { id },
   });
 
-  console.log({ transaction });
+  //   console.log({ transaction });
 
   return transaction;
 }

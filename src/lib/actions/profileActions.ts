@@ -151,28 +151,27 @@ export async function UpdateProfileAsAdmin({
 // }
 
 export async function getCards({ id }: { id: string }): Promise<
-  | "userNotFound"
-  | "noValidCardsFound"
-  | {
-      id: string;
-      user: string;
-      cardNumber: string;
-      cardName: string;
-      provider: string;
-      cvv: string;
-      expireDate: string;
-      currency: string;
-      balance: number;
-    }[]
+  {
+    id: string;
+    user: string;
+    cardNumber: string;
+    cardName: string;
+    provider: string;
+    cvv: string;
+    expireDate: string;
+    currency: string;
+    balance: number;
+  }[]
 > {
-  const user = await prisma.user.findUnique({ where: { id } });
-
-  if (!user) return "userNotFound";
-
   const cards = await prisma.cards.findMany({ where: { user: id } });
-  if (!cards) return "noValidCardsFound";
 
   return cards;
+}
+
+export async function getCardById({ id }: { id: string }) {
+  const card = await prisma.cards.findUnique({ where: { id } });
+
+  return card;
 }
 
 export async function generateCard({
@@ -209,4 +208,20 @@ export async function generateCard({
 
   if (createCard) return "success";
   return "failed";
+}
+
+export async function updateCardBalanceAction({
+  id,
+  amount,
+}: {
+  id: string;
+  amount: number;
+}): Promise<"success" | "failed"> {
+  const cardUpdated = await prisma.cards.update({
+    where: { id },
+    data: { balance: amount },
+  });
+
+  if (!cardUpdated) return "failed";
+  return "success";
 }
