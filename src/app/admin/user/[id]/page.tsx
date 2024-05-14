@@ -19,7 +19,6 @@ const UserProfile = async (id: { params: { id: string } }) => {
 
   // console.log({ user });
 
-  const { firstName, lastName, email, phone, image, role, password } = user;
   const plainId = id.params.id;
 
   return (
@@ -29,17 +28,17 @@ const UserProfile = async (id: { params: { id: string } }) => {
           <div className="flex gap-3 items-center">
             <div>
               <Image
-                src={user.image ? (user.image as string) : "/default.jpg"}
+                src={user?.image ? (user?.image as string) : "/default.jpg"}
                 height={60}
                 width={60}
-                alt={firstName as string}
+                alt={user?.firstName as string}
                 className="rounded-full"
               />
             </div>
             <div>
               <span className="font-bold text-sm">Name</span>
               <h2 className="font-bold text-2xl">
-                {firstName} {lastName}
+                {user?.firstName} {user?.lastName}
               </h2>
             </div>
             <Link href={`/admin/user/${id.params.id}/edit`}>

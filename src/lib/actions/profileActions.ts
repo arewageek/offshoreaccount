@@ -94,9 +94,6 @@ export async function allUsers() {
 
 export async function getUserData({ id }: { id: string }) {
   const user = await prisma.user.findUnique({ where: { id } });
-
-  if (!user) throw new Error("Invalid User ID ");
-
   return user;
 }
 

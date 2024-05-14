@@ -2,6 +2,7 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -12,6 +13,8 @@ const UploadImage = () => {
   const { data } = useSession();
 
   const email = data?.user.email;
+
+  const router = useRouter();
 
   const UploadFile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,6 +37,8 @@ const UploadImage = () => {
       }
 
       toast.success("File uploaded successfully");
+
+      router.refresh();
     } catch (e) {
       console.log(e);
       toast.error("An unknown error occurred");

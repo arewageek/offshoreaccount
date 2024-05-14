@@ -104,13 +104,14 @@ model Cards {
 model Transactions {
   id  String @id @default(cuid())
   user  String
+  desc String @default("wire transfer")
   accountName  String
   accountNumber  String
   bankName  String
   routingNumber String
   swiftCode String
   amount Int
-  createAt  DateTime
+  createAt  DateTime @default(now())
   status  String  @default("pending")
 
   @@unique([id])
