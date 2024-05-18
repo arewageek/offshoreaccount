@@ -39,20 +39,20 @@ export const QuickTransfer = () => {
   } = useForm<InputType>({ resolver: zodResolver(FormSchema) });
 
   const handleTransfer: SubmitHandler<InputType> = async (input) => {
-    const transferred = await createTransaction({
-      user: data?.user.id,
-      accountName: input.accountName,
-      accountNumber: input.accountNumber,
-      bankName: input.bankName,
-      routingNumber: input.routingNumber,
-      swiftCode: input.swiftCode,
-      amount: input.amount as unknown as number,
-    });
+    // const transferred = await createTransaction({
+    //   user: data?.user.id,
+    //   accountName: input.accountName,
+    //   accountNumber: input.accountNumber,
+    //   bankName: input.bankName,
+    //   routingNumber: input.routingNumber,
+    //   swiftCode: input.swiftCode,
+    //   amount: input.amount as unknown as number,
+    // });
 
-    if (!transferred) {
-      toast.error("Failed to complete tranaction");
-      return;
-    }
+    // if (!transferred) {
+    //   toast.error("Failed to complete tranaction");
+    //   return;
+    // }
 
     toast.success("Transaction Initiated");
     setShowModal(true);

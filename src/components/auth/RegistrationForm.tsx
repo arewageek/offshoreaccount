@@ -66,9 +66,11 @@ export const RegisterForm = () => {
     const { confirmPassword, ...user } = data;
     try {
       const created = await createUser(user);
-      if (created == "success") toast.success("Your account has been created");
-      else if (created == "userExist") {
+
+      if (created == "success") {
+        toast.success("Your account has been created");
         router.push("/auth/signin");
+      } else if (created == "userExist") {
         toast.error("Seems you already have an account");
       }
     } catch (error) {

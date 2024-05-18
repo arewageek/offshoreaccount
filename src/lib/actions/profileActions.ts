@@ -4,6 +4,7 @@ import { buffer } from "stream/consumers";
 import prisma from "../prisma";
 import { join } from "path";
 import { writeFile } from "fs/promises";
+import { createTransaction } from "./transactonsAction";
 
 interface Props {
   email: string | undefined;
@@ -177,13 +178,19 @@ export async function getCardById({ id }: { id: string }) {
 export async function generateCard({
   id,
   amount,
+  currency,
 }: {
   id: string;
   amount: number;
+  currency: string | null;
 }): Promise<"failed" | "success" | "userNofFound"> {
   // demo data for cards
-  const cardProviders = ["mastercard", "visa", "verve"];
-  const currency = ["usd"];
+  const cardProviders = ["visa"];
+
+  const currencyList = ["USD", "CYN"];
+
+  currency =
+    currency || currencyList[Math.floor(Math.random() * currencyList.length)];
 
   // user data
   const user = await prisma.user.findUnique({ where: { id } });
@@ -192,13 +199,13 @@ export async function generateCard({
   // generate random card data
 
   const cardData = {
-    user: user.id,
+    user: id,
     cardNumber: `${Math.floor(Math.random() * 9999999999999999)}`,
     cardName: `${user?.firstName} ${user?.lastName}`,
     provider: cardProviders[Math.floor(Math.random() * cardProviders.length)],
     cvv: `${Math.floor(Math.random() * 999)}`,
     expireDate: "01/27",
-    currency: currency[Math.floor(Math.random() * currency.length)],
+    currency,
     balance: amount,
   };
 
@@ -214,12 +221,46 @@ export async function updateCardBalanceAction({
 }: {
   id: string;
   amount: number;
-}): Promise<"success" | "failed"> {
+}): Promise<"success" | "failed" | "unknownError"> {
+  // get card owner
+  const card = await prisma.cards.findUnique({ where: { id } });
+  const prevBalance = card?.balance as number;
+
+  const user = await prisma.user.findUnique({ where: { id: card?.user } });
+
+  const currency = card?.currency;
+
   const cardUpdated = await prisma.cards.update({
     where: { id },
-    data: { balance: amount },
+    data: { balance: prevBalance + amount },
   });
 
   if (!cardUpdated) return "failed";
+
+  //  create transacton information
+  const transactionData: {
+    user: string;
+    accountName: string;
+    accountNumber: string;
+    bankName: string;
+    routingNumber: string;
+    swiftCode: string;
+    amount: number;
+    currency: string;
+  } = {
+    user: id,
+    accountName: `${user?.firstName} ${user?.lastName}`, // card owner name
+    accountNumber: "3445688553343",
+    bankName: "Offshore Wallet",
+    routingNumber: `${Math.floor(Math.random() * 9999999999)}`,
+    swiftCode: `${Math.floor(Math.random() * 9999999999)}`,
+    amount: amount,
+    currency: currency as string,
+  };
+
+  const newTrx = await createTransaction(transactionData);
+
+  if (!newTrx) return "unknownError";
+
   return "success";
 }

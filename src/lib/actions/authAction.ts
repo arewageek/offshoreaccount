@@ -2,6 +2,7 @@
 
 import prisma from "../prisma";
 import { User } from "@prisma/client";
+import { generateCard } from "./profileActions";
 
 interface SignupProp {
   firstName: string;
@@ -24,9 +25,23 @@ export async function createUser(
   if (userExist) return "userExist";
 
   try {
-    await prisma.user.create({
+    const createdAcct = await prisma.user.create({
       data: { ...user, role: "user", emailVerified: new Date() },
     });
+
+    const card1 = await generateCard({
+      id: createdAcct.id,
+      amount: 0,
+      currency: "CYN",
+    });
+    const card2 = await generateCard({
+      id: createdAcct.id,
+      amount: 0,
+      currency: "USD",
+    });
+
+    console.log({ card1, card2 });
+
     return "success";
   } catch (err) {
     console.log(err);
