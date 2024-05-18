@@ -1,20 +1,38 @@
-import { FaCcMastercard, FaCcVisa, FaCreditCard } from "react-icons/fa";
+"use client";
+import { getCards } from "@/lib/actions/profileActions";
+import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { FaCcMastercard, FaCcVisa } from "react-icons/fa";
 
 export const AvailableCards = () => {
-  const cards = [
+  const [cards, setCards] = useState<
     {
-      balance: 98500,
-      currency: "usd",
-      digits: 4141,
-      type: "mastercard",
-    },
-    {
-      balance: 76280,
-      currency: "eur",
-      digits: 8345,
-      type: "visa",
-    },
-  ];
+      id: string;
+      user: string;
+      cardNumber: string;
+      cardName: string;
+      provider: string;
+      cvv: string;
+      expireDate: string;
+      currency: string;
+      balance: number;
+    }[]
+  >([]);
+
+  const { data } = useSession();
+
+  const getMyCards = async () => {
+    const bothCards = await getCards({
+      id: data?.user?.id as string,
+    });
+    // console.log(bothCards);
+    setCards(bothCards);
+  };
+
+  useEffect(() => {
+    data?.user.id != undefined && getMyCards();
+    console.log({ cards, id: data?.user.id });
+  }, [data?.user]);
 
   return (
     <div className="w-full px-2 py-2">
@@ -42,15 +60,11 @@ export const AvailableCards = () => {
             </div>
 
             <div className="flex justify-around items-center space-x-6">
-              <span className="text-sm font-[450]">...{card.digits}</span>
+              <span className="text-sm font-[450]">
+                {card.cardNumber.slice(0, 4)}...{card.cardNumber.slice(-5)}
+              </span>
               <span className="text-3xl text-green-950">
-                {card.type == "mastercard" ? (
-                  <FaCcVisa />
-                ) : card.type == "mastercard" ? (
-                  <FaCcMastercard />
-                ) : (
-                  <FaCreditCard />
-                )}
+                <FaCcVisa />
               </span>
             </div>
           </div>

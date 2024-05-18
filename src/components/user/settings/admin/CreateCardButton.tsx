@@ -10,7 +10,7 @@ export default function CreateCardButton({ id }: { id: string }) {
   const router = useRouter();
 
   const createCard = async () => {
-    const created = await generateCard({ id: id, amount });
+    const created = await generateCard({ id: id, amount, currency: null });
 
     if (created === "success") {
       toast.success("New card has been generated");

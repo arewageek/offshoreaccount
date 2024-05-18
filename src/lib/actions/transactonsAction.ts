@@ -5,6 +5,7 @@ import prisma from "../prisma";
 export async function allTransactionsPerUser({ user }: { user: string }) {
   const transactions = await prisma.transactions.findMany({
     where: { user },
+    orderBy: { createAt: "desc" },
   });
 
   if (!transactions) return [];
@@ -30,6 +31,7 @@ export async function createTransaction({
   routingNumber,
   swiftCode,
   amount,
+  currency,
 }: {
   user: string | undefined;
   accountName: string;
@@ -38,6 +40,7 @@ export async function createTransaction({
   routingNumber: string;
   amount: number;
   swiftCode: string;
+  currency: string;
 }): Promise<"success" | "failed"> {
   const createTrx = await prisma.transactions.create({
     data: {
@@ -49,6 +52,9 @@ export async function createTransaction({
       swiftCode,
       amount: Number(amount),
       createAt: new Date(),
+      status: "pending",
+      currency,
+      desc: "Wire Transfer",
     },
   });
 

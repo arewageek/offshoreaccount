@@ -110,6 +110,7 @@ model Transactions {
   bankName  String
   routingNumber String
   swiftCode String
+  currency  String
   amount Int
   createAt  DateTime @default(now())
   status  String  @default("pending")

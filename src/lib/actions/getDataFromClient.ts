@@ -10,5 +10,7 @@ export async function getTrxFromClient({ user }: { user: string }) {
 export async function getCardsFromClient({ id }: { id: string }) {
   const cards = await getCards({ id });
 
+  console.log("done", { cards });
+
   return cards;
 }

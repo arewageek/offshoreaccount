@@ -12,28 +12,16 @@ export const UpcomingPayments = ({
 }) => {
   const payments = [
     {
-      icon: <FaCouch />,
-      title: "Freelance",
-      type: "Unrgular Payment",
-      amount: 1500,
-    },
-    {
       icon: <FaCoins />,
       title: "Salary",
       type: "Regular Payment",
       amount: 4500,
     },
     {
-      icon: <FaCoins />,
+      icon: <FaCouch />,
       title: "Salary",
       type: "Regular Payment",
-      amount: 4000,
-    },
-    {
-      icon: <FaCoins />,
-      title: "Salary",
-      type: "Regular Payment",
-      amount: 2100,
+      amount: 1800,
     },
   ];
   return (

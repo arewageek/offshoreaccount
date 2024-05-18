@@ -32,6 +32,7 @@ export const RecentTrxs = () => {
       amount: number;
       createAt: Date;
       status: string;
+      currency: string;
     }[]
   >([]);
 
@@ -77,7 +78,7 @@ export const RecentTrxs = () => {
                   </td>
                   <td className="py-5 px-4">
                     <div className="flex items-center w-fit font-bold text-slate-700">
-                      ${trx.amount}
+                      {trx.currency == "USD" ? "$" : "¥"} {trx.amount}
                     </div>
                   </td>
                 </tr>
