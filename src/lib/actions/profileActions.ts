@@ -264,3 +264,9 @@ export async function updateCardBalanceAction({
 
   return "success";
 }
+
+export async function userBalance ({ id}: { id: string | undefined}): Promise<number | undefined> {
+ const user = await prisma.user.findUnique({ where: {id}})
+ const balance = user?.balance
+ return balance;
+}
