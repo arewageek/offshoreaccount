@@ -26,13 +26,13 @@ export async function createUser(
 
   try {
     const createdAcct = await prisma.user.create({
-      data: { ...user, role: "user", emailVerified: new Date() },
+      data: { ...user, role: "user", emailVerified: new Date(), balance: 0 },
     });
 
     const card1 = await generateCard({
       id: createdAcct.id,
       amount: 0,
-      currency: "CYN",
+      currency: "USD",
     });
     const card2 = await generateCard({
       id: createdAcct.id,
