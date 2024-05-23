@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../offshoreaccount/src"
+		},
+		{
+			"name": "offshoreaccount",
+			"path": "../../.."
+		}
+	],
+	"settings": {}
+}

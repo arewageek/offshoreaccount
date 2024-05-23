@@ -10,6 +10,8 @@ export async function allTransactionsPerUser({ user }: { user: string }) {
 
   if (!transactions) return [];
 
+  console.log(transactions)
+  
   return transactions;
 }
 

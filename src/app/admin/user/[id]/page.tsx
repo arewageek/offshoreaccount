@@ -1,4 +1,5 @@
 import RecentTransactions from "@/components/admin/RecentTransactions";
+import UserBalance from "@/components/admin/UserBalance";
 import { AvailableCards } from "@/components/user/settings/admin/AvailableCards";
 import CreateCardButton from "@/components/user/settings/admin/CreateCardButton";
 import { UpcomingPayments } from "@/components/user/UpcomingPayments";
@@ -46,6 +47,23 @@ const UserProfile = async (id: { params: { id: string } }) => {
                 <FaFileAlt />
               </div>
             </Link>
+          </div>
+
+          <div className="flex gap-3 lg:flex-row flex-col mt-10 w-full">
+            <div className="lg:w-1/2">
+              <div className=" lg:w-3/5">
+                <UserBalance id={id.params.id} />
+              </div>
+            </div>
+
+            <div className="lg:w-1/2">
+              <div>
+                <h3 className="font-bold text-lg">Upcoming Payments</h3>
+                <div className="py-5">
+                  <UpcomingPayments count={1} sideBtn={false} />
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="flex gap-3 lg:flex-row flex-col mt-10 w-full">

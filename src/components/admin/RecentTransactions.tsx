@@ -6,9 +6,6 @@ import { FaFileAlt } from "react-icons/fa";
 const RecentTransactions = async ({ id }: { id: string }) => {
   const transactions = await allTransactionsPerUser({ user: id });
 
-  //   console.log({ transactions: transactions });
-  //   console.log({ loo: transactions[0].desc });
-
   return (
     <div className="mt-10 px-2">
       <h3 className="text-lg font-bold">Recent Transactions</h3>

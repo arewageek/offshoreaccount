@@ -55,6 +55,7 @@ model User {
   phone         String
   password      String
   role          String    @default("user")  
+  balance       Int  @deefault(0)
   image         String?
   accounts      Account[]
   sessions      Session[]
