@@ -10,7 +10,11 @@ export const UserBalance = async ({id}:{id: string | undefined}) => {
             <div className='text-xl font bold'>
             <h3>Account Balance</h3>
             <h3>
+<<<<<<< HEAD
                 ${ balance.toStrngLocale() }
+=======
+                ${ balance?.toLocaleString() }
+>>>>>>> dev
             </h3>
             </div>
         </div>
