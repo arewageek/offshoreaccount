@@ -5,6 +5,7 @@ import { UpcomingPayments } from "@/components/user/UpcomingPayments";
 import React from "react";
 import { AvailableCards } from "@/components/user/AvailableCards";
 import WelcomeBlock from "@/components/user/WelcomeBlock";
+import MyBalance from "@/components/user/MyBalance";
 
 const Dashboard = () => {
   return (
@@ -12,6 +13,10 @@ const Dashboard = () => {
       <div className="w-full md:w-full lg:w-3/5 px-3">
         <div className="w-full h-fit flex flex-wrap flex-col md:flex-row">
           <WelcomeBlock />
+
+          <div className="w-full h-fit md:w-full lg:w-3/5 lg:px-8 py-3">
+            <MyBalance />
+          </div>
 
           <div className="w-full h-fit md:w-full lg:w-3/5 lg:px-8 py-3">
             <AvailableCards />

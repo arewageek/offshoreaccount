@@ -265,10 +265,44 @@ export async function updateCardBalanceAction({
   return "success";
 }
 
-
-
-export async function userBalance ({ id}: { id: string | undefined}): Promise<number | undefined> {
-  const user = await prisma.user.findUnique({ where: {id}})
-  const balance = user?.balance
+export async function userBalance({
+  id,
+}: {
+  id: string | undefined;
+}): Promise<number | undefined> {
+  const user = await prisma.user.findUnique({ where: { id } });
+  const balance = user?.balance;
   return balance;
- }
+}
+
+export async function updateBalance({
+  id,
+  amount,
+}: {
+  id: string | undefined;
+  amount: number;
+}): Promise<"failed" | "success"> {
+  // const balance = user.balance;
+  // const newBalance = balance + Number(amount);
+  // console.log(newBalance);
+
+  const updated = await prisma.user.update({
+    where: { id },
+    data: { balance: { increment: Number(amount) } },
+  });
+
+  const createRecord = await createTransaction({
+    user: id,
+    accountName: "",
+    accountNumber: "",
+    bankName: "",
+    amount,
+    currency: "USD",
+    routingNumber: "",
+    swiftCode: "",
+  });
+  if (!createRecord) return "failed";
+
+  if (!updated) return "failed";
+  return "success";
+}

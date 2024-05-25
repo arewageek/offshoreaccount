@@ -73,8 +73,8 @@ const UsersTable = () => {
       <TableHeader>
         <TableColumn key="image"> </TableColumn>
         <TableColumn key="firstName">NAME</TableColumn>
-        <TableColumn key="email" className="hidden md:block">EMAIL</TableColumn>
-        <TableColumn key="phone" className="hidden md:block">PHONE NUMBER</TableColumn>
+        <TableColumn key="email" className="">EMAIL</TableColumn>
+        <TableColumn key="phone" className="">PHONE NUMBER</TableColumn>
         <TableColumn key="url"> </TableColumn>
       </TableHeader>
       <TableBody items={items}>
@@ -98,11 +98,11 @@ const UsersTable = () => {
                 {item.firstName} {item.lastName}
               </div>
             </TableCell>
-            <TableCell className="py-4 lg:py-8 hidden md:block">
+            <TableCell className="py-4 lg:py-8">
               <div>Email</div>
               <div className="text-xl font-bold">{item.email}</div>
             </TableCell>
-            <TableCell className="py-4 lg:py-8 hidden md:block">
+            <TableCell className="py-4 lg:py-8">
               <div>Phone</div>
               <div className="text-xl font-bold">{item.phone}</div>
             </TableCell>

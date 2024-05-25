@@ -55,15 +55,6 @@ const UserProfile = async (id: { params: { id: string } }) => {
                 <UserBalance id={id.params.id} />
               </div>
             </div>
-
-            <div className="lg:w-1/2">
-              <div>
-                <h3 className="font-bold text-lg">Upcoming Payments</h3>
-                <div className="py-5">
-                  <UpcomingPayments count={1} sideBtn={false} />
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="flex gap-3 lg:flex-row flex-col mt-10 w-full">

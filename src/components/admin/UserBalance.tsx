@@ -1,18 +1,11 @@
-import { userBalance } from '@/lib/actions/profileActions'
-import React from 'react'
+import { userBalance } from "@/lib/actions/profileActions";
+import React from "react";
+import UserBalanceContent from "./UserBalanceContent";
 
-export const UserBalance = async ({id}:{id: string | undefined}) => {
+export const UserBalance = async ({ id }: { id: string | undefined }) => {
+  const balance = await userBalance({ id });
 
-    const balance = await userBalance({id})
-    
-    return <div className='w-full py-3'>
-            <div className='text-xl font bold'>
-            <h3>Account Balance</h3>
-            <h3>
-                ${ balance?.toLocaleString() }
-            </h3>
-            </div>
-        </div>
-}
+  return <UserBalanceContent balance={balance} id={id} />;
+};
 
-export default UserBalance
+export default UserBalance;
