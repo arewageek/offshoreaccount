@@ -8,9 +8,8 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MobileNav } from "./MobileNav";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { toast } from "react-toastify";
 
 export const TopNav = () => {
   const [showSidenav, setShowSidenav] = useState<boolean>(false);
@@ -30,17 +29,6 @@ export const TopNav = () => {
       setRole(role);
     }
   }, [data]);
-
-  const doSignout = async () => {
-    const signedOut = await signOut();
-    if (signedOut) {
-      toast.success("Signed Out successfully");
-    } else {
-      toast.error("Could not sign you out");
-    }
-
-    return;
-  };
 
   return (
     <>
@@ -68,10 +56,10 @@ export const TopNav = () => {
 
         <div className="p-3 text-lg">
           <Link
-            href="/api/auth/signout"
+            href="/api/auth/signout?callbackurl=/"
             className="hover:text-slate-600 transition"
           >
-            <FaSignOutAlt onClick={doSignout} />
+            <FaSignOutAlt />
           </Link>
         </div>
 

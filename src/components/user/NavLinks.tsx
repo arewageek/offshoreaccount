@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
+import { LiaTelegramPlane } from "react-icons/lia";
 
 const NavLinks = () => {
   const links = [
@@ -18,6 +19,12 @@ const NavLinks = () => {
       label: "Payments",
       icon: <FaCreditCard />,
       path: "/user/payments",
+    },
+
+    {
+      label: "Quick Transfer",
+      icon: <LiaTelegramPlane />,
+      path: "/user/transfer",
     },
 
     {
