@@ -1,18 +1,15 @@
 "use client";
 
-import {
-  updateCardBalanceAction,
-  UpdateProfileAsAdmin,
-} from "@/lib/actions/profileActions";
-import { updateTrx } from "@/lib/actions/transactonsAction";
+import { updateCardBalanceAction } from "@/lib/actions/profileActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { z } from "zod";
+import ReturnToPrev from "../ReturnToPrev";
 
 const FormSchema = z.object({
   amount: z.string(),
@@ -59,11 +56,14 @@ const CreditCardEdit = ({
       onSubmit={handleSubmit(updateCardBalance)}
       className="grid gap-3 p-5 lg:p-10 rounded-lg bg-white shadow"
     >
-      <div className="grid gap-0 mb-5">
-        <h3 className="font-bold text-2xl">Card Balance</h3>
-        <span className="text-xs font-light">
-          Update balance for the credit card
-        </span>
+      <div className="flex lg:items-center justify-between gap-5 flex-col lg:flex-row">
+        <ReturnToPrev />
+        <div className="grid gap-0 mb-5 w-full">
+          <h3 className="font-bold text-2xl">Card Balance</h3>
+          <span className="text-xs font-light">
+            Update balance for the credit card
+          </span>
+        </div>
       </div>
 
       <div className="grid gap-5">

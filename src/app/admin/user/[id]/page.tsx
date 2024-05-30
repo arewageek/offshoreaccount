@@ -1,5 +1,6 @@
 import RecentTransactions from "@/components/admin/RecentTransactions";
 import UserBalance from "@/components/admin/UserBalance";
+import ReturnToPrev from "@/components/ReturnToPrev";
 import { AvailableCards } from "@/components/user/settings/admin/AvailableCards";
 import CreateCardButton from "@/components/user/settings/admin/CreateCardButton";
 import { UpcomingPayments } from "@/components/user/UpcomingPayments";
@@ -26,6 +27,10 @@ const UserProfile = async (id: { params: { id: string } }) => {
     <main className="w-full lg:px-10 lg:py-10 py-10 rounded-3xl flex flex-wrap  bg-green-100">
       <div className="w-full lg:w-full px-3 flex flex-col lg:flex-row gap-10">
         <div className="py-6 lg:py-10 px-10 w-full">
+          <div className="mb-10">
+            <ReturnToPrev />
+          </div>
+
           <div className="flex gap-3 items-center">
             <div>
               <Image
@@ -71,7 +76,7 @@ const UserProfile = async (id: { params: { id: string } }) => {
               <div>
                 <h3 className="font-bold text-lg">Upcoming Payments</h3>
                 <div className="py-5">
-                  <UpcomingPayments count={1} sideBtn={false} />
+                  <UpcomingPayments count={2} sideBtn={false} />
                 </div>
               </div>
             </div>

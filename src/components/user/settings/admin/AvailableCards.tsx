@@ -25,7 +25,7 @@ export const AvailableCards = async ({ user }: { user: string }) => {
         {cards &&
           cards.map((card, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className="w-full py-7 px-6 rounded-3xl bg-green-200 flex justify-between my-3">
+              <div className="w-full py-7 px-6 rounded-3xl bg-green-200 flex justify-between my-3 flex-wrap gap-y-3">
                 <div className="flex items-center space-x-3">
                   <span className="font-bold text-2xl text-green-950">
                     {card.balance.toLocaleString()}

@@ -25,7 +25,7 @@ export const UpcomingPayments = ({
     },
   ];
   return (
-    <div className="w-full h-full flex flex-wrap lg:flex-nowrap flex-col lg:flex-row lg:space-x-10 space-y-10 lg:space-y-0">
+    <div className="w-full h-full flex flex-wrap lg:flex-wrap flex-col lg:flex-row gap-5">
       {payments.map(
         (item, index) =>
           index < count && (
