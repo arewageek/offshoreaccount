@@ -88,7 +88,10 @@ export async function updateProfile({
 }
 
 export async function allUsers() {
-  const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
+  const users = await prisma.user.findMany({
+    orderBy: { createdAt: "desc" },
+    where: { role: { not: "admin" } },
+  });
 
   return users;
 }
@@ -223,8 +226,10 @@ export async function updateCardBalanceAction({
   amount: number;
 }): Promise<"success" | "failed" | "unknownError"> {
   // get card owner
-  const card = await prisma.cards.findUnique({ where: { id } });
+  const card = await prisma.cards.findUnique({ where: { id: id } });
   const prevBalance = card?.balance as number;
+
+  if (id == undefined) return "failed";
 
   const user = await prisma.user.findUnique({ where: { id: card?.user } });
 
@@ -232,33 +237,25 @@ export async function updateCardBalanceAction({
 
   const cardUpdated = await prisma.cards.update({
     where: { id },
-    data: { balance: prevBalance + amount },
+    data: { balance: amount },
   });
 
   if (!cardUpdated) return "failed";
 
   //  create transacton information
-  const transactionData: {
-    user: string;
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    routingNumber: string;
-    swiftCode: string;
-    amount: number;
-    currency: string;
-  } = {
-    user: id,
+
+  const newTrx = await createTransaction({
+    user: user?.id,
     accountName: `${user?.firstName} ${user?.lastName}`, // card owner name
     accountNumber: "3445688553343",
     bankName: "Offshore Wallet",
+    amount: amount - prevBalance,
     routingNumber: `${Math.floor(Math.random() * 9999999999)}`,
     swiftCode: `${Math.floor(Math.random() * 9999999999)}`,
-    amount: amount,
-    currency: currency as string,
-  };
+    currency: "USD",
+  });
 
-  const newTrx = await createTransaction(transactionData);
+  console.log("Created transaction ::: ", newTrx);
 
   if (!newTrx) return "unknownError";
 
@@ -272,6 +269,7 @@ export async function userBalance({
 }): Promise<number | undefined> {
   const user = await prisma.user.findUnique({ where: { id } });
   const balance = user?.balance;
+  console.log("Balance from action", balance);
   return balance;
 }
 

@@ -1,3 +1,4 @@
+import ReturnToPrev from "@/components/ReturnToPrev";
 import AccountSettings from "@/components/user/settings/admin/AccountSettings";
 import PasswordResetForm from "@/components/user/settings/admin/PasswordReset";
 import UploadImage from "@/components/user/settings/admin/UploadImage";
@@ -11,6 +12,9 @@ const UserAccountSettings = async (id: { params: { id: string } }) => {
 
   return (
     <main className="w-full lg:px-10 lg:py-20 py-10 rounded-3xl flex flex-wrap">
+      <div className="w-full mb-10 px-3">
+        <ReturnToPrev />
+      </div>
       <div className="w-full lg:w-full px-3 flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2 grid gap-10">
           <UserCard

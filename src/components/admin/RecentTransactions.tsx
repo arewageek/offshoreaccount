@@ -22,7 +22,9 @@ const RecentTransactions = async ({ id }: { id: string }) => {
                   <td className="py-2 text-sm capitalize">
                     {trx.createAt.toDateString()}
                   </td>
-                  <td className="py-2 font-bold">${Number(trx.amount)}</td>
+                  <td className="py-2 font-bold">
+                    ${Number(trx.amount).toLocaleString()}
+                  </td>
                   <td className="py-2">
                     <div className="flex justify-center items-center w-fit">
                       <div className="flex justify-center items-center w-fit">

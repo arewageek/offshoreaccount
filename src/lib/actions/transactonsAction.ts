@@ -2,15 +2,21 @@
 
 import prisma from "../prisma";
 
-export async function allTransactionsPerUser({ user }: { user: string }) {
-  const transactions = await prisma.transactions.findMany({
-    where: { user },
-    orderBy: { createAt: "desc" },
-  });
+export async function allTransactionsPerUser({
+  user,
+}: {
+  user: string | undefined;
+}) {
+  const transactions = user
+    ? await prisma.transactions.findMany({
+        where: { user },
+        orderBy: { createAt: "desc" },
+      })
+    : [];
 
   if (!transactions) return [];
 
-  // console.log(transactions)
+  console.log(user, transactions);
 
   return transactions;
 }
